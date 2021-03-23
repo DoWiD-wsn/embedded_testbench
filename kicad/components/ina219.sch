@@ -1,0 +1,186 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 7 11
+Title "Embedded Testbench (ETB)"
+Date "2021-03-03"
+Rev "0.1"
+Comp "UAS Technikum Wien"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L mycomponents:INA219 U9
+U 1 1 60403709
+P 6000 4000
+AR Path="/60434890/60403709" Ref="U9"  Part="1" 
+AR Path="/6045186D/60403709" Ref="U10"  Part="1" 
+AR Path="/60459483/60403709" Ref="U11"  Part="1" 
+AR Path="/60461530/60403709" Ref="U12"  Part="1" 
+AR Path="/6046A86C/60403709" Ref="U?"  Part="1" 
+AR Path="/60473DF2/60403709" Ref="U?"  Part="1" 
+F 0 "U12" H 6000 4547 60  0000 C CNN
+F 1 "INA219" H 6000 4441 60  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-8" H 6000 4441 60  0001 C CNN
+F 3 "https://www.ti.com/lit/ds/symlink/ina219.pdf" H 6000 4441 60  0001 C CNN
+	1    6000 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR093
+U 1 1 604044D8
+P 5150 3700
+AR Path="/60434890/604044D8" Ref="#PWR093"  Part="1" 
+AR Path="/6045186D/604044D8" Ref="#PWR097"  Part="1" 
+AR Path="/60459483/604044D8" Ref="#PWR0101"  Part="1" 
+AR Path="/60461530/604044D8" Ref="#PWR0105"  Part="1" 
+AR Path="/6046A86C/604044D8" Ref="#PWR?"  Part="1" 
+AR Path="/60473DF2/604044D8" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0105" H 5150 3550 50  0001 C CNN
+F 1 "+5V" H 5150 3850 50  0000 C CNN
+F 2 "" H 5150 3700 50  0001 C CNN
+F 3 "" H 5150 3700 50  0001 C CNN
+	1    5150 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR096
+U 1 1 60405102
+P 6500 4200
+AR Path="/60434890/60405102" Ref="#PWR096"  Part="1" 
+AR Path="/6045186D/60405102" Ref="#PWR0100"  Part="1" 
+AR Path="/60459483/60405102" Ref="#PWR0104"  Part="1" 
+AR Path="/60461530/60405102" Ref="#PWR0108"  Part="1" 
+AR Path="/6046A86C/60405102" Ref="#PWR?"  Part="1" 
+AR Path="/60473DF2/60405102" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0108" H 6500 3950 50  0001 C CNN
+F 1 "GND" H 6500 4050 50  0000 C CNN
+F 2 "" H 6500 4200 50  0001 C CNN
+F 3 "" H 6500 4200 50  0001 C CNN
+	1    6500 4200
+	1    0    0    -1  
+$EndComp
+Text HLabel 6600 4200 2    50   Input ~ 0
+GND
+Text HLabel 6800 4000 2    50   Input ~ 0
+VIN-
+Text HLabel 6800 3700 2    50   Input ~ 0
+VIN+
+Text HLabel 5000 3700 0    50   Input ~ 0
+VCC
+$Comp
+L power:GND #PWR094
+U 1 1 60405BF7
+P 5150 4200
+AR Path="/60434890/60405BF7" Ref="#PWR094"  Part="1" 
+AR Path="/6045186D/60405BF7" Ref="#PWR098"  Part="1" 
+AR Path="/60459483/60405BF7" Ref="#PWR0102"  Part="1" 
+AR Path="/60461530/60405BF7" Ref="#PWR0106"  Part="1" 
+AR Path="/6046A86C/60405BF7" Ref="#PWR?"  Part="1" 
+AR Path="/60473DF2/60405BF7" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0106" H 5150 3950 50  0001 C CNN
+F 1 "GND" H 5150 4050 50  0000 C CNN
+F 2 "" H 5150 4200 50  0001 C CNN
+F 3 "" H 5150 4200 50  0001 C CNN
+	1    5150 4200
+	1    0    0    -1  
+$EndComp
+Text HLabel 5500 3900 0    50   Input ~ 0
+SDA
+Text HLabel 5500 4000 0    50   Input ~ 0
+SCL
+Wire Wire Line
+	5500 3900 5600 3900
+Wire Wire Line
+	5500 4000 5600 4000
+Wire Wire Line
+	6400 4200 6500 4200
+Wire Wire Line
+	6500 4200 6600 4200
+Connection ~ 6500 4200
+$Comp
+L power:GND #PWR095
+U 1 1 604065C8
+P 5450 4200
+AR Path="/60434890/604065C8" Ref="#PWR095"  Part="1" 
+AR Path="/6045186D/604065C8" Ref="#PWR099"  Part="1" 
+AR Path="/60459483/604065C8" Ref="#PWR0103"  Part="1" 
+AR Path="/60461530/604065C8" Ref="#PWR0107"  Part="1" 
+AR Path="/6046A86C/604065C8" Ref="#PWR?"  Part="1" 
+AR Path="/60473DF2/604065C8" Ref="#PWR?"  Part="1" 
+F 0 "#PWR0107" H 5450 3950 50  0001 C CNN
+F 1 "GND" H 5450 4050 50  0000 C CNN
+F 2 "" H 5450 4200 50  0001 C CNN
+F 3 "" H 5450 4200 50  0001 C CNN
+	1    5450 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 4300 5600 4200
+Wire Wire Line
+	5600 4200 5450 4200
+Connection ~ 5600 4200
+$Comp
+L Device:R R20
+U 1 1 60407265
+P 6600 3850
+AR Path="/60434890/60407265" Ref="R20"  Part="1" 
+AR Path="/6045186D/60407265" Ref="R21"  Part="1" 
+AR Path="/60459483/60407265" Ref="R22"  Part="1" 
+AR Path="/60461530/60407265" Ref="R23"  Part="1" 
+AR Path="/6046A86C/60407265" Ref="R?"  Part="1" 
+AR Path="/60473DF2/60407265" Ref="R?"  Part="1" 
+F 0 "R23" H 6670 3896 50  0000 L CNN
+F 1 "0.1" H 6670 3805 50  0000 L CNN
+F 2 "Resistor_SMD:R_2512_6332Metric" V 6530 3850 50  0001 C CNN
+F 3 "~" H 6600 3850 50  0001 C CNN
+	1    6600 3850
+	1    0    0    -1  
+$EndComp
+Text Notes 6500 3650 0    50   ~ 0
+2512FK
+Wire Wire Line
+	6400 4000 6600 4000
+Wire Wire Line
+	6600 4000 6800 4000
+Connection ~ 6600 4000
+Wire Wire Line
+	6400 3800 6500 3800
+Wire Wire Line
+	6500 3800 6500 3700
+Wire Wire Line
+	6500 3700 6600 3700
+Wire Wire Line
+	6600 3700 6800 3700
+Connection ~ 6600 3700
+$Comp
+L Device:C C36
+U 1 1 6040893C
+P 5150 3950
+AR Path="/60434890/6040893C" Ref="C36"  Part="1" 
+AR Path="/6045186D/6040893C" Ref="C37"  Part="1" 
+AR Path="/60459483/6040893C" Ref="C38"  Part="1" 
+AR Path="/60461530/6040893C" Ref="C39"  Part="1" 
+AR Path="/6046A86C/6040893C" Ref="C?"  Part="1" 
+AR Path="/60473DF2/6040893C" Ref="C?"  Part="1" 
+F 0 "C39" H 5050 4050 50  0000 L CNN
+F 1 "100n" H 4950 3850 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5188 3800 50  0001 C CNN
+F 3 "~" H 5150 3950 50  0001 C CNN
+	1    5150 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 4200 5150 4100
+Wire Wire Line
+	5000 3700 5150 3700
+Connection ~ 5150 3700
+Wire Wire Line
+	5150 3700 5600 3700
+Wire Wire Line
+	5150 3800 5150 3700
+$EndSCHEMATC
