@@ -2,6 +2,8 @@
 
 The board was designed with KiCad `version 5.1.9` and mainly uses schematic symbols and PCB footprints available via the [KiCad libraries](https://kicad.org/libraries/download/).
 All parts not included in these libraries are available as project-specific libraries (see below).
+It requires only a two-layer PCB with all components (except the expansion header) placed on the top side.
+Also, it has enough ground zone area to avoid heating or EMI issues.
 
 
 ## Contents
@@ -30,9 +32,25 @@ kicad/
 ## Costs
 
 For the bill of materials (BOM) provided in the `.ods` file links to suitable components available at [Farnell](https://www.farnell.com/) are given including the prices valid at the time of the development (2021-03).
-The cost of one ETB was around 53€ for the components ([Farnell](https://www.farnell.com/)) and xx€ for the PCB ([PCB Pool / Beta Layout](https://eu.beta-layout.com/pcb/)).
-Thus, the total costs of one ETB are around **100€**.
+The cost of one *ETB* was around 53€ for the components ([Farnell](https://www.farnell.com/)) and around 15€ for the PCB ([PCB Pool / Beta Layout](https://eu.beta-layout.com/pcb/)).
+Thus, the total costs of one *ETB* are below **70€**.
 Depending on the supplier and quantities ordered, the costs may vary.
+
+
+## Schematic
+
+**Main schematic**:  
+![Main Schematic (/media/schematic/embedded_testbench-main.svg)](../media/schematic/embedded_testbench-main.svg)
+
+**Embedded hierarchical schematics**:  
+* MIC24045 Schematic ([#1](../media/schematic/embedded_testbench-mic1.svg),[#2](../media/schematic/embedded_testbench-mic2.svg),[#3](../media/schematic/embedded_testbench-mic3.svg),[#4](../media/schematic/embedded_testbench-mic4.svg))  
+![MIC24045 Schematic #1 (/media/schematic/embedded_testbench-mic1.svg)](../media/schematic/embedded_testbench-mic1.svg)
+* INA219 Schematic ([#1](../media/schematic/embedded_testbench-ina1.svg),[#2](../media/schematic/embedded_testbench-ina2.svg),[#3](../media/schematic/embedded_testbench-ina3.svg),[#4](../media/schematic/embedded_testbench-ina4.svg))  
+![INA219 Schematic #1 (/media/schematic/embedded_testbench-ina1.svg)](../media/schematic/embedded_testbench-ina1.svg)
+* [CTRL shifter Schematic](../media/schematic/embedded_testbench-shifter_ctrl.svg)  
+![CTRL shifter Schematic (/media/schematic/embedded_testbench-ina1.svg)](../media/schematic/embedded_testbench-shifter_ctrl.svg)
+* [UART shifter Schematic](../media/schematic/embedded_testbench-shifter_uart.svg)  
+![UART shifter Schematic (/media/schematic/embedded_testbench-ina1.svg)](../media/schematic/embedded_testbench-shifter_uart.svg)
 
 
 ## PCB Design
@@ -60,7 +78,7 @@ For the PCB design the following rules were used:
     * Thermal spoke width: `0.8 mm`
 
 
-## Libraries used
+## Components/Libraries
 
 If your installation of KiCad is missing (some of) the standard libraries, you can download them from [KiCad libraries](https://kicad.org/libraries/download/).
 The custom libraries required are all contained in this repository.
