@@ -1,4 +1,4 @@
-# ETB PCB Design
+# ETB - PCB Design
 
 The board was designed with KiCad `version 5.1.9` and mainly uses schematic symbols and PCB footprints available via the [KiCad libraries](https://kicad.org/libraries/download/).
 All parts not included in these libraries are available as project-specific libraries (see below).
@@ -51,8 +51,10 @@ Depending on the supplier and quantities ordered, the costs may vary.
 
 ## PCB Design
 
+Front:  
 ![PCB front (/media/pcb/embedded_testbench-front.png)](../media/pcb/embedded_testbench-front.png)
 
+Back:  
 ![PCB back (/media/pcb/embedded_testbench-back.png)](../media/pcb/embedded_testbench-back.png)
 
 For the PCB design the following rules were used:
