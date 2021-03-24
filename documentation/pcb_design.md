@@ -91,9 +91,9 @@ For the PCB design the following rules were used:
 | C4,C12,C20,C28 | 22uF | Device | C | Capacitor_SMD | C_1206_3216Metric |
 | C10,C18,C26,C34 | 100uF | Device | CP1 | Capacitor_Tantalum_SMD | CP_EIA-7343-31_Kemet-D |
 | L1-L4 | 2.2uH | Device | L | *myfootprint*`*` | L_Bourns-SRN5040 |
-| R3,R4,R20-R23 | 0.1ohm (0.1%) | Device | R | Resistor_SMD | R_2512_6332Metric |
-| R16-R19 | 2.7kohm (1%) | Device | R | Resistor_SMD | R_0603_1608Metric |
-| R1,R2,R5-R15,R24-R36 | 10kohm (1%) | Device | R | Resistor_SMD | R_0603_1608Metric |
+| R3,R4,R20-R23 | 0.1ohm | Device | R | Resistor_SMD | R_2512_6332Metric |
+| R16-R19 | 2.7kohm | Device | R | Resistor_SMD | R_0603_1608Metric |
+| R1,R2,R5-R15,R24-R36 | 10kohm | Device | R | Resistor_SMD | R_0603_1608Metric |
 | Q1-Q6 | BSS138 | Transistor_FET | BSS138 | Package_TO_SOT_SMD | SOT-23 |
 | U1 | ADS1115IDGS | Analog_ADC | DS1115IDGS | Package_SO | TSSOP-10_3x3mm_P0.5mm |
 | U2,U3,U9-U12 | INA219 | *mycomponents*`*` | INA219 | Package_TO_SOT_SMD | SOT-23-8 |
