@@ -1,0 +1,266 @@
+<svg width="604pt" height="662pt" viewBox="0.00 0.00 604.00 662.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 658)">
+<title>g</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-658 601,-658 601,5 -4,5"></polygon>
+<!-- ETB -->
+<g id="node1" class="node"><title>ETB</title>
+<ellipse fill="none" stroke="black" cx="30" cy="-307" rx="29.0529" ry="18"></ellipse>
+<text text-anchor="middle" x="30" y="-302.8" font-family="Times,serif" font-size="14.00">ETB</text>
+</g>
+<!-- ExpSetup -->
+<g id="node3" class="node"><title>ExpSetup</title>
+<ellipse fill="none" stroke="black" cx="149" cy="-353" rx="48.6772" ry="18"></ellipse>
+<text text-anchor="middle" x="149" y="-348.8" font-family="Times,serif" font-size="14.00">ExpSetup</text>
+</g>
+<!-- ETB&#45;&gt;ExpSetup -->
+<g id="edge2" class="edge"><title>ETB-&gt;ExpSetup</title>
+<path fill="none" stroke="black" d="M54.959,-316.42C69.3778,-322.089 88.1583,-329.472 105.067,-336.12"></path>
+<polygon fill="black" stroke="black" points="104.173,-339.529 114.76,-339.931 106.734,-333.015 104.173,-339.529"></polygon>
+</g>
+<!-- LM75 -->
+<g id="node5" class="node"><title>LM75</title>
+<ellipse fill="none" stroke="black" cx="149" cy="-262" rx="35.3548" ry="18"></ellipse>
+<text text-anchor="middle" x="149" y="-257.8" font-family="Times,serif" font-size="14.00">LM75</text>
+</g>
+<!-- ETB&#45;&gt;LM75 -->
+<g id="edge4" class="edge"><title>ETB-&gt;LM75</title>
+<path fill="none" stroke="black" d="M55.2425,-297.676C71.3557,-291.479 92.8228,-283.222 111.047,-276.213"></path>
+<polygon fill="black" stroke="black" points="112.432,-279.43 120.509,-272.574 109.919,-272.897 112.432,-279.43"></polygon>
+</g>
+<!-- MCUutil -->
+<g id="node7" class="node"><title>MCUutil</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-515" rx="45.8234" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-510.8" font-family="Times,serif" font-size="14.00">MCUutil</text>
+</g>
+<!-- ETB&#45;&gt;MCUutil -->
+<g id="edge6" class="edge"><title>ETB-&gt;MCUutil</title>
+<path fill="none" stroke="black" d="M42.894,-323.184C55.0376,-338.969 75.0342,-363.016 96,-380 159.662,-431.57 245.606,-474.759 295.193,-497.567"></path>
+<polygon fill="black" stroke="black" points="293.761,-500.76 304.312,-501.719 296.662,-494.39 293.761,-500.76"></polygon>
+</g>
+<!-- STEMMA -->
+<g id="node9" class="node"><title>STEMMA</title>
+<ellipse fill="none" stroke="black" cx="149" cy="-99" rx="52.1867" ry="18"></ellipse>
+<text text-anchor="middle" x="149" y="-94.8" font-family="Times,serif" font-size="14.00">STEMMA</text>
+</g>
+<!-- ETB&#45;&gt;STEMMA -->
+<g id="edge8" class="edge"><title>ETB-&gt;STEMMA</title>
+<path fill="none" stroke="black" d="M40.5746,-289.978C60.9128,-253.822 108.554,-169.126 132.98,-125.703"></path>
+<polygon fill="black" stroke="black" points="136.109,-127.278 137.961,-116.846 130.008,-123.846 136.109,-127.278"></polygon>
+</g>
+<!-- time.sleep -->
+<g id="node11" class="node"><title>time.sleep</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-636" rx="50.4162" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-631.8" font-family="Times,serif" font-size="14.00">time.sleep</text>
+</g>
+<!-- ExpSetup&#45;&gt;time.sleep -->
+<g id="edge10" class="edge"><title>ExpSetup-&gt;time.sleep</title>
+<path fill="none" stroke="black" d="M150.196,-371.3C151.788,-418.67 163.171,-545.724 238,-605 306.643,-659.376 414.385,-655.04 478.615,-646.1"></path>
+<polygon fill="black" stroke="black" points="479.156,-649.558 488.537,-644.634 478.133,-642.633 479.156,-649.558"></polygon>
+</g>
+<!-- DS18B20 -->
+<g id="node13" class="node"><title>DS18B20</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-578" rx="49.2609" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-573.8" font-family="Times,serif" font-size="14.00">DS18B20</text>
+</g>
+<!-- ExpSetup&#45;&gt;DS18B20 -->
+<g id="edge12" class="edge"><title>ExpSetup-&gt;DS18B20</title>
+<path fill="none" stroke="black" d="M153.58,-371.067C161.854,-408.226 185.728,-493.77 238,-542 250.354,-553.399 266.637,-561.274 282.326,-566.679"></path>
+<polygon fill="black" stroke="black" points="281.388,-570.053 291.978,-569.735 283.501,-563.38 281.388,-570.053"></polygon>
+</g>
+<!-- I2Chelper -->
+<g id="node15" class="node"><title>I2Chelper</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-380" rx="49.7981" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-375.8" font-family="Times,serif" font-size="14.00">I2Chelper</text>
+</g>
+<!-- ExpSetup&#45;&gt;I2Chelper -->
+<g id="edge14" class="edge"><title>ExpSetup-&gt;I2Chelper</title>
+<path fill="none" stroke="black" d="M194.783,-359.536C220.291,-363.259 252.464,-367.954 279.556,-371.908"></path>
+<polygon fill="black" stroke="black" points="279.266,-375.403 289.666,-373.384 280.277,-368.476 279.266,-375.403"></polygon>
+</g>
+<!-- INA219 -->
+<g id="node17" class="node"><title>INA219</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-326" rx="42.8596" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-321.8" font-family="Times,serif" font-size="14.00">INA219</text>
+</g>
+<!-- ExpSetup&#45;&gt;INA219 -->
+<g id="edge16" class="edge"><title>ExpSetup-&gt;INA219</title>
+<path fill="none" stroke="black" d="M194.783,-346.464C222.117,-342.475 257.106,-337.368 285.294,-333.254"></path>
+<polygon fill="black" stroke="black" points="285.955,-336.695 295.345,-331.788 284.944,-329.768 285.955,-336.695"></polygon>
+</g>
+<!-- JT103 -->
+<g id="node19" class="node"><title>JT103</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-180" rx="35.3548" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-175.8" font-family="Times,serif" font-size="14.00">JT103</text>
+</g>
+<!-- ExpSetup&#45;&gt;JT103 -->
+<g id="edge18" class="edge"><title>ExpSetup-&gt;JT103</title>
+<path fill="none" stroke="black" d="M163.932,-335.836C188.472,-305.612 236.933,-245.972 238,-245 257.755,-227.008 282.883,-210.311 302.613,-198.346"></path>
+<polygon fill="black" stroke="black" points="304.461,-201.319 311.26,-193.194 300.878,-195.306 304.461,-201.319"></polygon>
+</g>
+<!-- MIC24045 -->
+<g id="node21" class="node"><title>MIC24045</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-434" rx="53.336" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-429.8" font-family="Times,serif" font-size="14.00">MIC24045</text>
+</g>
+<!-- ExpSetup&#45;&gt;MIC24045 -->
+<g id="edge20" class="edge"><title>ExpSetup-&gt;MIC24045</title>
+<path fill="none" stroke="black" d="M172.205,-369.043C189.451,-380.892 214.337,-396.689 238,-407 251.541,-412.9 266.712,-417.847 280.96,-421.827"></path>
+<polygon fill="black" stroke="black" points="280.08,-425.215 290.646,-424.428 281.895,-418.455 280.08,-425.215"></polygon>
+</g>
+<!-- TCA9548A -->
+<g id="node23" class="node"><title>TCA9548A</title>
+<ellipse fill="none" stroke="black" cx="336" cy="-272" rx="56.7658" ry="18"></ellipse>
+<text text-anchor="middle" x="336" y="-267.8" font-family="Times,serif" font-size="14.00">TCA9548A</text>
+</g>
+<!-- ExpSetup&#45;&gt;TCA9548A -->
+<g id="edge22" class="edge"><title>ExpSetup-&gt;TCA9548A</title>
+<path fill="none" stroke="black" d="M172.205,-336.957C189.451,-325.108 214.337,-309.311 238,-299 250.895,-293.381 265.268,-288.627 278.915,-284.749"></path>
+<polygon fill="black" stroke="black" points="279.967,-288.09 288.692,-282.08 278.123,-281.337 279.967,-288.09"></polygon>
+</g>
+<!-- smbus -->
+<g id="node26" class="node"><title>smbus</title>
+<polygon fill="lightgray" stroke="black" points="560,-330 506,-330 506,-294 560,-294 560,-330"></polygon>
+<text text-anchor="middle" x="533" y="-307.8" font-family="Times,serif" font-size="14.00">smbus</text>
+</g>
+<!-- LM75&#45;&gt;smbus -->
+<g id="edge34" class="edge"><title>LM75-&gt;smbus</title>
+<path fill="none" stroke="black" d="M180.269,-253.342C233.112,-239.715 345.047,-217.499 434,-245 460.929,-253.325 487.055,-271.877 505.55,-287.353"></path>
+<polygon fill="black" stroke="black" points="503.377,-290.101 513.237,-293.978 507.947,-284.798 503.377,-290.101"></polygon>
+</g>
+<!-- MCUutil&#45;&gt;time.sleep -->
+<g id="edge44" class="edge"><title>MCUutil-&gt;time.sleep</title>
+<path fill="none" stroke="black" d="M376.866,-523.41C395.699,-528.888 417.59,-537.584 434,-551 457.489,-570.203 447.051,-589.154 470,-609 474.72,-613.082 480.154,-616.633 485.8,-619.698"></path>
+<polygon fill="black" stroke="black" points="484.26,-622.84 494.777,-624.119 487.353,-616.561 484.26,-622.84"></polygon>
+</g>
+<!-- subprocess -->
+<g id="node34" class="node"><title>subprocess</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-582" rx="53.3109" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-577.8" font-family="Times,serif" font-size="14.00">subprocess</text>
+</g>
+<!-- MCUutil&#45;&gt;subprocess -->
+<g id="edge36" class="edge"><title>MCUutil-&gt;subprocess</title>
+<path fill="none" stroke="black" d="M370.966,-526.671C402.584,-537.534 449.991,-553.823 485.189,-565.916"></path>
+<polygon fill="black" stroke="black" points="484.175,-569.269 494.77,-569.208 486.45,-562.648 484.175,-569.269"></polygon>
+</g>
+<!-- os -->
+<g id="node36" class="node"><title>os</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-528" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-523.8" font-family="Times,serif" font-size="14.00">os</text>
+</g>
+<!-- MCUutil&#45;&gt;os -->
+<g id="edge38" class="edge"><title>MCUutil-&gt;os</title>
+<path fill="none" stroke="black" d="M381.737,-517.982C416.287,-520.286 463.486,-523.432 495.708,-525.581"></path>
+<polygon fill="black" stroke="black" points="495.811,-529.095 506.022,-526.268 496.277,-522.111 495.811,-529.095"></polygon>
+</g>
+<!-- shutil.which -->
+<g id="node38" class="node"><title>shutil.which</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-474" rx="58.5259" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-469.8" font-family="Times,serif" font-size="14.00">shutil.which</text>
+</g>
+<!-- MCUutil&#45;&gt;shutil.which -->
+<g id="edge40" class="edge"><title>MCUutil-&gt;shutil.which</title>
+<path fill="none" stroke="black" d="M376.932,-506.604C404.983,-500.706 442.941,-492.725 474.28,-486.136"></path>
+<polygon fill="black" stroke="black" points="475.135,-489.533 484.201,-484.05 473.695,-482.683 475.135,-489.533"></polygon>
+</g>
+<!-- RPi.GPIO -->
+<g id="node40" class="node"><title>RPi.GPIO</title>
+<polygon fill="lightgray" stroke="black" points="569.666,-438 496.334,-438 496.334,-402 569.666,-402 569.666,-438"></polygon>
+<text text-anchor="middle" x="533" y="-415.8" font-family="Times,serif" font-size="14.00">RPi.GPIO</text>
+</g>
+<!-- MCUutil&#45;&gt;RPi.GPIO -->
+<g id="edge42" class="edge"><title>MCUutil-&gt;RPi.GPIO</title>
+<path fill="none" stroke="black" d="M364.011,-500.568C390.711,-486.45 432.84,-464.57 470,-447 475.372,-444.46 481.042,-441.869 486.684,-439.347"></path>
+<polygon fill="black" stroke="black" points="488.362,-442.432 496.094,-435.188 485.532,-436.029 488.362,-442.432"></polygon>
+</g>
+<!-- board.SCL,SDA -->
+<g id="node47" class="node"><title>board.SCL,SDA</title>
+<polygon fill="lightgray" stroke="black" points="390.044,-144 281.956,-144 281.956,-108 390.044,-108 390.044,-144"></polygon>
+<text text-anchor="middle" x="336" y="-121.8" font-family="Times,serif" font-size="14.00">board.SCL,SDA</text>
+</g>
+<!-- STEMMA&#45;&gt;board.SCL,SDA -->
+<g id="edge52" class="edge"><title>STEMMA-&gt;board.SCL,SDA</title>
+<path fill="none" stroke="black" d="M197.642,-105.953C220.124,-109.234 247.272,-113.196 271.475,-116.729"></path>
+<polygon fill="black" stroke="black" points="271.245,-120.232 281.645,-118.213 272.256,-113.306 271.245,-120.232"></polygon>
+</g>
+<!-- busio -->
+<g id="node49" class="node"><title>busio</title>
+<polygon fill="lightgray" stroke="black" points="363,-90 309,-90 309,-54 363,-54 363,-90"></polygon>
+<text text-anchor="middle" x="336" y="-67.8" font-family="Times,serif" font-size="14.00">busio</text>
+</g>
+<!-- STEMMA&#45;&gt;busio -->
+<g id="edge54" class="edge"><title>STEMMA-&gt;busio</title>
+<path fill="none" stroke="black" d="M197.642,-92.0468C229.203,-87.4407 269.956,-81.4929 298.854,-77.2754"></path>
+<polygon fill="black" stroke="black" points="299.535,-80.7132 308.925,-75.8056 298.524,-73.7865 299.535,-80.7132"></polygon>
+</g>
+<!-- adafruit_seesaw.seesaw.Seesaw -->
+<g id="node51" class="node"><title>adafruit_seesaw.seesaw.Seesaw</title>
+<polygon fill="lightgray" stroke="black" points="433.289,-36 238.711,-36 238.711,0 433.289,0 433.289,-36"></polygon>
+<text text-anchor="middle" x="336" y="-13.8" font-family="Times,serif" font-size="14.00">adafruit_seesaw.seesaw.Seesaw</text>
+</g>
+<!-- STEMMA&#45;&gt;adafruit_seesaw.seesaw.Seesaw -->
+<g id="edge56" class="edge"><title>STEMMA-&gt;adafruit_seesaw.seesaw.Seesaw</title>
+<path fill="none" stroke="black" d="M172.566,-82.7094C189.797,-70.8888 214.501,-55.2393 238,-45 242.472,-43.0514 247.122,-41.2067 251.857,-39.4665"></path>
+<polygon fill="black" stroke="black" points="253.381,-42.6419 261.668,-36.0415 251.074,-36.033 253.381,-42.6419"></polygon>
+</g>
+<!-- DS18B20&#45;&gt;time.sleep -->
+<g id="edge24" class="edge"><title>DS18B20-&gt;time.sleep</title>
+<path fill="none" stroke="black" d="M374.598,-589.183C405.724,-598.441 450.147,-611.654 483.868,-621.684"></path>
+<polygon fill="black" stroke="black" points="482.935,-625.058 493.518,-624.554 484.931,-618.348 482.935,-625.058"></polygon>
+</g>
+<!-- I2Chelper&#45;&gt;smbus -->
+<g id="edge26" class="edge"><title>I2Chelper-&gt;smbus</title>
+<path fill="none" stroke="black" d="M377.462,-369.946C394.997,-365.279 415.668,-359.358 434,-353 446.045,-348.822 473.661,-337.2 496.518,-327.391"></path>
+<polygon fill="black" stroke="black" points="498.161,-330.494 505.963,-323.326 495.394,-324.065 498.161,-330.494"></polygon>
+</g>
+<!-- INA219&#45;&gt;smbus -->
+<g id="edge28" class="edge"><title>INA219-&gt;smbus</title>
+<path fill="none" stroke="black" d="M378.354,-323.031C413.158,-320.532 462.441,-316.994 495.728,-314.604"></path>
+<polygon fill="black" stroke="black" points="496.212,-318.079 505.935,-313.871 495.71,-311.096 496.212,-318.079"></polygon>
+</g>
+<!-- Adafruit_ADS1x15 -->
+<g id="node29" class="node"><title>Adafruit_ADS1x15</title>
+<polygon fill="lightgray" stroke="black" points="596.42,-225 469.58,-225 469.58,-189 596.42,-189 596.42,-225"></polygon>
+<text text-anchor="middle" x="533" y="-202.8" font-family="Times,serif" font-size="14.00">Adafruit_ADS1x15</text>
+</g>
+<!-- JT103&#45;&gt;Adafruit_ADS1x15 -->
+<g id="edge30" class="edge"><title>JT103-&gt;Adafruit_ADS1x15</title>
+<path fill="none" stroke="black" d="M370.079,-184.58C394.485,-187.96 428.64,-192.689 459.292,-196.933"></path>
+<polygon fill="black" stroke="black" points="459.148,-200.446 469.534,-198.351 460.108,-193.512 459.148,-200.446"></polygon>
+</g>
+<!-- math.log -->
+<g id="node31" class="node"><title>math.log</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-153" rx="45.2049" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-148.8" font-family="Times,serif" font-size="14.00">math.log</text>
+</g>
+<!-- JT103&#45;&gt;math.log -->
+<g id="edge32" class="edge"><title>JT103-&gt;math.log</title>
+<path fill="none" stroke="black" d="M370.079,-175.42C400.243,-171.243 445.297,-165.005 480.227,-160.169"></path>
+<polygon fill="black" stroke="black" points="480.826,-163.619 490.252,-158.781 479.866,-156.685 480.826,-163.619"></polygon>
+</g>
+<!-- MIC24045&#45;&gt;smbus -->
+<g id="edge48" class="edge"><title>MIC24045-&gt;smbus</title>
+<path fill="none" stroke="black" d="M386.988,-428.115C403.312,-424.215 420.655,-417.741 434,-407 460.64,-385.559 444.916,-362.242 470,-339 477.478,-332.071 487.017,-326.736 496.357,-322.711"></path>
+<polygon fill="black" stroke="black" points="497.881,-325.874 505.925,-318.979 495.337,-319.352 497.881,-325.874"></polygon>
+</g>
+<!-- MIC24045&#45;&gt;RPi.GPIO -->
+<g id="edge50" class="edge"><title>MIC24045-&gt;RPi.GPIO</title>
+<path fill="none" stroke="black" d="M388.489,-430.303C418.738,-428.132 456.654,-425.409 485.916,-423.309"></path>
+<polygon fill="black" stroke="black" points="486.551,-426.772 496.274,-422.565 486.049,-419.79 486.551,-426.772"></polygon>
+</g>
+<!-- math.floor -->
+<g id="node43" class="node"><title>math.floor</title>
+<ellipse fill="white" stroke="black" cx="533" cy="-366" rx="51.5639" ry="18"></ellipse>
+<text text-anchor="middle" x="533" y="-361.8" font-family="Times,serif" font-size="14.00">math.floor</text>
+</g>
+<!-- MIC24045&#45;&gt;math.floor -->
+<g id="edge46" class="edge"><title>MIC24045-&gt;math.floor</title>
+<path fill="none" stroke="black" d="M379.369,-423.437C396.484,-418.852 416.329,-413.129 434,-407 445.004,-403.183 469.007,-393.152 490.502,-383.968"></path>
+<polygon fill="black" stroke="black" points="492.017,-387.126 499.829,-379.969 489.259,-380.692 492.017,-387.126"></polygon>
+</g>
+<!-- TCA9548A&#45;&gt;smbus -->
+<g id="edge58" class="edge"><title>TCA9548A-&gt;smbus</title>
+<path fill="none" stroke="black" d="M384.204,-281.683C418.534,-288.725 464.32,-298.117 495.785,-304.571"></path>
+<polygon fill="black" stroke="black" points="495.37,-308.059 505.869,-306.64 496.776,-301.202 495.37,-308.059"></polygon>
+</g>
+</g>
+</svg>

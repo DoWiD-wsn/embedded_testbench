@@ -29,9 +29,12 @@ Additionally, the ETB supports test automation with the possibility of remote co
 ```
 .
 ├── documentation       : project documentation
+│   └── datasheets      : datasheets of components used
 ├── kicad               : KiCad files
-└── media               : Miscellaneous media (images, etc.)
-    └── pcb             : Photos and rendered images of the PCB
+├── media               : Miscellaneous media (images, etc.)
+│   ├── pcb             : Photos and rendered images of the PCB
+│   └── schematic       : SVG images of the schematics
+└── source              : Python library and example scripts
 ```
 
 For more information on the PCB (and its design) refer to [documentation/pcb_design.md](documentation/pcb_design.md).

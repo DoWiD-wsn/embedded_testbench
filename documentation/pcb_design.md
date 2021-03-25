@@ -1,8 +1,8 @@
 # ETB - PCB Design
 
-The board was designed with KiCad `version 5.1.9` and mainly uses schematic symbols and PCB footprints available via the [KiCad libraries](https://kicad.org/libraries/download/).
-All parts not included in these libraries are available as project-specific libraries (see below).
-It requires only a two-layer PCB with all components (except the expansion header) placed on the top side.
+The board was designed with KiCad `version 5.1.9` and mainly uses schematic symbols and PCB footprints available in the [KiCad libraries](https://kicad.org/libraries/download/).
+Parts not included in these libraries are available as project-specific libraries (see below).
+The design requires only a two-layer PCB with all components (except the Raspberry Pi header) placed on the top side.
 Also, it has enough ground zone area to avoid heating or EMI issues.
 
 
