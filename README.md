@@ -10,11 +10,11 @@ Additionally, the ETB supports test automation with the possibility of remote co
 * 4 mounting holes matching the Raspberry Pi [2|3|4] model B+ layout
 * Compact size of 122 x 56 mm
 * 4 controllable voltage domains supplied via own 12V input  
-    (0.64 to 5.25V, in 5|10|30|50 mV steps, total maximum of 5A each; see [MIC24045 datasheet](documentation/datasheets/mic24045.pdf))
+    (0.64 to 5.25V, in 5|10|30|50 mV steps, with a current limit of 3A each; see [MIC24045 datasheet](docs/datasheets/mic24045.pdf))
 * 6 wattmeter: one per voltage domain + 2 additional  
-    (0 to 26V, +/- 3.2A (max), 1.5 mA resolution, 1% precision; see [INA219 datasheet](documentation/datasheets/ina219.pdf))
-* 4 channel 16-bit ADC: 2 general + 2 for thermistor (see [ADS1115 datasheet](documentation/datasheets/ads1115.pdf))
-* I2C multiplexer for easier channel selection (voltage supply + wattmeter; see [TCA9548A datasheet](documentation/datasheets/tca9548a.pdf))
+    (0 to 26V, +/- 3.2A (max), 1.5 mA resolution, 1% precision; see [INA219 datasheet](docs/datasheets/ina219.pdf))
+* 4 channel 16-bit ADC: 2 general + 2 for thermistor (see [ADS1115 datasheet](docs/datasheets/ads1115.pdf))
+* I2C multiplexer for easier channel selection (voltage supply + wattmeter; see [TCA9548A datasheet](docs/datasheets/tca9548a.pdf))
 * 12-pin expansion header (2x PWM, 6x GPIO, +3V3/+5V, and 2x GND)
 * 4 test control signals (reset, enable, running, result)
 * Connectors for TWI (2x), OWI (1x), SPI (1x), and UART (1x)
@@ -28,7 +28,7 @@ Additionally, the ETB supports test automation with the possibility of remote co
 
 ```
 .
-├── documentation       : project documentation
+├── docs                : documents & project documentation
 │   └── datasheets      : datasheets of components used
 ├── kicad               : KiCad files
 ├── media               : Miscellaneous media (images, etc.)
@@ -37,8 +37,8 @@ Additionally, the ETB supports test automation with the possibility of remote co
 └── source              : Python library and example scripts
 ```
 
-For more information on the PCB (and its design) refer to [documentation/pcb_design.md](documentation/pcb_design.md).
-The python library, its functionality and usage as well as example scripts are presented in [documentation/python_library.md](documentation/python_library.md).
+For more information on the PCB (and its design) refer to [docs/pcb_design.md](docs/pcb_design.md).
+The python library, its functionality and usage as well as example scripts are presented in [docs/python_library.md](docs/python_library.md).
 
 
 ## Built with
