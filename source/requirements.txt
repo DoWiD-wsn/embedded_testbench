@@ -1,0 +1,14 @@
+# MySQL
+mysql-connector-python
+
+# Data processing/visualization
+matplotlib
+numpy
+scipy
+
+# Xbee
+digi-xbee
+
+# ADS1115 ADC
+adafruit-circuitpython-seesaw
+adafruit-ads1x15
