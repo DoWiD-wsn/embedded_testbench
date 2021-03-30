@@ -2,6 +2,6 @@
 
 # Add path to the etb module
 import sys
-sys.path.insert(1, '../etb/')
+sys.path.insert(1, '../')
 # Import the etb module
-import etb
+from testbench import etb
