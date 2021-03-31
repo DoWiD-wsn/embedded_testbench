@@ -1,8 +1,8 @@
 #####
 # @package mic24045
-# @brief   mic24045 DC/DC converter
+# @brief   MIC24045 DC/DC converter
 #
-# Package containing the mic24045 DC/DC converter class used on the ETB.
+# Package containing the MIC24045 DC/DC converter class used on the ETB.
 #
 # @file     /etb/core/mic24045.py
 # @author   $Author: Dominik Widhalm $
@@ -30,7 +30,7 @@ GPIO.setmode(GPIO.BCM)
 
 #####
 # @class    tca9548
-# @brief    TCA9548 I2C multiplexer
+# @brief    TCA9548 DC/DC converter class
 #
 # Class for the TCA9548 multiplexer used on the ETB.
 class mic24045(object):
@@ -131,11 +131,11 @@ class mic24045(object):
 
 
     ###
-    # Read an I2C register value from the MIC.
+    # Read an 8-bit I2C register value from the MIC.
     #
     # @param[in] self The object pointer.
     # @param[in] register Register address.
-    # @param[out] Register value in case of success; otherwise False.
+    # @param[out] 8-bit register value in case of success; otherwise False.
     def read_register(self, register):
         # Try to read the given register
         try:
@@ -148,7 +148,7 @@ class mic24045(object):
             return False
 
     
-    # Write a value to an I2C register of the MIC.
+    # Write an 8-bit value to an I2C register of the MIC.
     #
     # @param[in] self The object pointer.
     # @param[in] register Register address.

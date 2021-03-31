@@ -1,8 +1,8 @@
 #####
 # @package tca9548
-# @brief   tca9548 I2C multiplexer
+# @brief   TCA9548 I2C multiplexer
 #
-# Package containing the tca9548 multiplexer class used on the ETB.
+# Package containing the TCA9548 multiplexer class used on the ETB.
 #
 # @file     /etb/core/tca9548.py
 # @author   $Author: Dominik Widhalm $
@@ -12,26 +12,23 @@
 # @note     Don't forget to enable I2C, e.g. with sudo raspi-config
 # @see      https://raspberrypi.stackexchange.com/questions/59043/how-to-read-from-multiplexer-with-python-i2c
 #
-# @example  multiplexer = tca9548()       # Get an instance with default I2C address
-# @example  multiplexer = tca9548(0x70)   # Get an instance with specific I2C address and default bus
-# @example  multiplexer = tca9548(0x70,1) # Get an instance with specific I2C address and specific number
-#
+# @example  multiplexer = tca9548()       # Get an instance with default I2C address (0x70)
 # @example  multiplexer.select(1)         # Select channel 1 (SD0/SC0)
 # @example  multiplexer.get_channels()    # Get a list of currently active channels
 #####
 
 
 ##### LIBRARIES #####
-# smbus (subclass of I2C functionality)
+# smbus (provides subset of I2C functionality)
 import smbus
 
 
 #####
 # @class    tca9548
-# @brief    tca9548 I2C multiplexer
+# @brief    TCA9548 I2C multiplexer class
 #
-# Class for the tca9548 multiplexer used on the ETB.
-class TCA9548A(object):
+# Class for the TCA9548 multiplexer used on the ETB.
+class tca9548(object):
     ###
     # The constructor.
     #
@@ -39,7 +36,7 @@ class TCA9548A(object):
     # @param[in] address specific I2C address (default: 0x70)
     # @param[in] busnum specific I2C bus number (default: 1)
     def __init__(self, address=0x70, busnum=1):
-        # @var __i2c_addres
+        # @var __i2c_address
         # Objects own I2C address
         self.__i2c_address = address
         # @var __bus
@@ -69,7 +66,7 @@ class TCA9548A(object):
             return True
 
     ###
-    # Read the current settings.
+    # Read the current settings (8-bit).
     #
     # @param[in] self The object pointer.
     # @param[out] Config byte value in case of success; otherwise False.
