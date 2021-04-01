@@ -30,44 +30,58 @@ GPIO.setmode(GPIO.BCM)
 
 ##### GLOBAL VARIABLES #####
 # Register addresses
-MIC24045_REG_STATUS = 0x00
-MIC24045_REG_SET1   = 0x01
-MIC24045_REG_SET2   = 0x02
-MIC24045_REG_VOUT   = 0x03
-MIC24045_REG_CMD    = 0x04
+MIC24045_REG_STATUS     = 0x00
+MIC24045_REG_SET1       = 0x01
+MIC24045_REG_SET2       = 0x02
+MIC24045_REG_VOUT       = 0x03
+MIC24045_REG_CMD        = 0x04
 # Current limit (ILIM; in SET1)
-MIC24045_ILIM_2     = 0
-MIC24045_ILIM_3     = 1
-MIC24045_ILIM_4     = 2
-MIC24045_ILIM_5     = 3
+MIC24045_ILIM_OFFSET    = 6
+MIC24045_ILIM = {
+    2:      0x00,
+    3:      0x01,
+    4:      0x02,
+    5:      0x03
+}
 # Operating frequency (FREQ; in SET1)
-MIC24045_FREQ_310   = 0
-MIC24045_FREQ_400   = 1
-MIC24045_FREQ_500   = 2
-MIC24045_FREQ_570   = 3
-MIC24045_FREQ_660   = 4
-MIC24045_FREQ_780   = 5
-MIC24045_FREQ_970   = 6
-MIC24045_FREQ_1200  = 7
+MIC24045_FREQ_OFFSET    = 3
+MIC24045_FREQ = {
+    310:    0x00,
+    400:    0x01,
+    500:    0x02,
+    570:    0x03,
+    660:    0x04,
+    780:    0x05,
+    970:    0x06,
+    1200:   0x07
+}
 # Start-up-delay [ms] (SUD; in SET2)
-MIC24045_SUD_0      = 0
-MIC24045_SUD_0_5    = 1
-MIC24045_SUD_1      = 2
-MIC24045_SUD_2      = 3
-MIC24045_SUD_4      = 4
-MIC24045_SUD_6      = 5
-MIC24045_SUD_8      = 6
-MIC24045_SUD_10     = 7
+MIC24045_SUD_OFFSET     = 4
+MIC24045_SUD = {
+    0:      0x00,
+    0.5:    0x01,
+    1:      0x02,
+    2:      0x03,
+    4:      0x04,
+    6:      0x05,
+    8:      0x06,
+    10:     0x07
+}
 # Margin (MRG; in SET2)
-MIC24045_MRG_0      = 0
-MIC24045_MRG_NEG    = 1
-MIC24045_MRG_POS    = 2
-MIC24045_MRG_POS    = 3
+MIC24045_MRG_OFFSET     = 2
+MIC24045_MRG = {
+    0:      0x00,
+    -5:     0x01,
+    +5:     0x02
+}
 # Soft-start slop [V/ms] (SS; in SET2)
-MIC24045_SS_016     = 0
-MIC24045_SS_038     = 1
-MIC24045_SS_076     = 2
-MIC24045_SS_150     = 3
+MIC24045_SS_OFFSET      = 0
+MIC24045_SS = {
+    0.16:   0x00,
+    0.38:   0x01,
+    0.76:   0x02,
+    1.5:    0x03
+}
 
 
 #####
@@ -101,15 +115,15 @@ class MIC24045(object):
         # Clear the fault flag
         self.clear_fault_flag()
         # Set the current limit to 3A (because of the INA219 limits)
-        self.set_current_limit(MIC24045_ILIM_3)
+        self.set_current_limit(3)
         # Set the operating frequency to 500kHz
-        self.set_frequency(MIC24045_FREQ_500)
+        self.set_frequency(500)
         # Set the start-up delay to 0ms
-        self.set_startup_delay(MIC24045_SUD_0)
+        self.set_startup_delay(0)
         # Set the voltage margin to 0%
-        self.set_voltage_margins(MIC24045_MRG_0)
+        self.set_voltage_margins(0)
         # Set the soft-start slope to its lowest value (0.16 V/ms)
-        self.set_soft_start_slope(MIC24045_SS_016)
+        self.set_soft_start_slope(0.16)
 
 
     ###
@@ -306,15 +320,15 @@ class MIC24045(object):
     # @param[out] True in case of success; otherwise False.
     def set_current_limit(self,ilim):
         # Check given parameter
-        if (ilim<0) or (ilim>3):
-            return False
+        if ilim not in MIC24045_ILIM:
+            raise ValueError('Valid ILIM values are:  2, 3, 4, and 5')
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
         if not ret:
             return False
         # Prepare the correct register value
-        msg = (ret & 0x3F) | (ilim<<6)
+        msg = (ret & 0x3F) | (MIC24045_ILIM[ilim]<<MIC24045_ILIM_OFFSET)
         # Write ILIM value to SETTING 1 register
         return self.write_register(MIC24045_REG_SET1, msg)
 
@@ -327,15 +341,15 @@ class MIC24045(object):
     # @param[out] True in case of success; otherwise False.
     def set_frequency(self,freq):
         # Check given parameter
-        if (freq<0) or (freq>7):
-            return False
+        if freq not in MIC24045_FREQ:
+            raise ValueError('Valid FREQ values are:  310, 400, 500, 570, 660, 780, 970, 1200 [kHz]')
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
         if not ret:
             return False
         # Prepare the correct register value
-        msg = (ret & 0xC7) | (freq<<3)
+        msg = (ret & 0xC7) | (MIC24045_FREQ[freq]<<MIC24045_FREQ_OFFSET)
         # Write FREQ value to SETTING 1 register
         return self.write_register(MIC24045_REG_SET1, msg)
 
@@ -348,15 +362,15 @@ class MIC24045(object):
     # @param[out] True in case of success; otherwise False.
     def set_startup_delay(self,delay):
         # Check given parameter
-        if (delay<0) or (delay>7):
-            return False
+        if delay not in MIC24045_SUD:
+            raise ValueError('Valid SD values are:  0, 0.5, 1, 2, 4, 6, 8, 10 [ms]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
         if not ret:
             return False
         # Prepare the correct register value
-        msg = (ret & 0x8F) | (delay<<4)
+        msg = (ret & 0x8F) | (MIC24045_SUD[delay]<<MIC24045_SUD_OFFSET)
         # Write SUD value to SETTING 2 register
         return self.write_register(MIC24045_REG_SET2, msg)
 
@@ -369,15 +383,15 @@ class MIC24045(object):
     # @param[out] True in case of success; otherwise False.
     def set_voltage_margins(self,margin):
         # Check given parameter
-        if (margin<0) or (margin>3):
-            return False
+        if margin not in MIC24045_MRG:
+            raise ValueError('Valid MRG values are:  0, -5, +5 [%]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
         if not ret:
             return False
         # Prepare the correct register value
-        msg = (ret & 0xF3) | (margin<<2)
+        msg = (ret & 0xF3) | (MIC24045_MRG[margin]<<MIC24045_MRG_OFFSET)
         # Write MRG value to SETTING 2 register
         return self.write_register(MIC24045_REG_SET2, msg)
 
@@ -390,15 +404,15 @@ class MIC24045(object):
     # @param[out] True in case of success; otherwise False.
     def set_soft_start_slope(self,slope):
         # Check given parameter
-        if (slope<0) or (slope>3):
-            return False
+        if slope not in MIC24045_SS:
+            raise ValueError('Valid SS values are:  0.16, 0.38, 0.76, 1.5 [V/ms]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
         if not ret:
             return False
         # Prepare the correct register value
-        msg = (ret & 0xFC) | slope
+        msg = (ret & 0xFC) | MIC24045_SS[slope]
         # Write SS value to SETTING 2 register
         return self.write_register(MIC24045_REG_SET2, msg)
 

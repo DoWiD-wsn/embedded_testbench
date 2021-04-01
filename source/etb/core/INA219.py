@@ -35,27 +35,43 @@ INA219_REG_CALIBRATION    = 0x05
 # Reset-bit mask (RST)
 INA219_RST                = 0x8000
 # Bus voltage range (BRNG)
-INA219_BRNG_16            = 0
-INA219_BRNG_32            = 1
+INA219_BRNG_OFFSET        = 13
+INA219_BRNG = {
+    16:     0x00,
+    32:     0x01
+}
+INA219_BRNG_DEFAULT        = INA219_BRNG[32]
 # PGA gain and range for the shunt voltage (PG)
-INA219_PG_1               = 0
-INA219_PG_2               = 1
-INA219_PG_4               = 2
-INA219_PG_8               = 3
-# ADC resolution (BADC/SADC)
-INA219_ADC_BITS_9         = 0
-INA219_ADC_BITS_10        = 1
-INA219_ADC_BITS_11        = 2
-INA219_ADC_BITS_12        = 3
-# ADC averaging (BADC/SADC)
-INA219_ADC_SAMPLE_1       = 0
-INA219_ADC_SAMPLE_2       = 1
-INA219_ADC_SAMPLE_4       = 2
-INA219_ADC_SAMPLE_8       = 3
-INA219_ADC_SAMPLE_16      = 4
-INA219_ADC_SAMPLE_32      = 5
-INA219_ADC_SAMPLE_64      = 6
-INA219_ADC_SAMPLE_128     = 7
+INA219_PG_OFFSET          = 11
+INA219_PG = {
+    40:     0x00,
+    80:     0x01,
+    160:    0x02,
+    320:    0x03
+}
+INA219_PG_DEFAULT         = INA219_PG[320]
+# ADC (BADC/SADC)
+INA219_BADC_OFFSET        = 7
+INA219_SADC_OFFSET        = 3
+INA219_ADC_DEFAULT        = 0x0011
+# ADC resolution
+INA219_ADC_BITS = {
+    9:      0x00,
+    10:     0x01,
+    11:     0x02,
+    12:     0x03
+}
+# ADC averaging
+INA219_ADC_SAMPLE = {
+    1:      0x00,
+    2:      0x01,
+    4:      0x02,
+    8:      0x03,
+    16:     0x04,
+    32:     0x05,
+    64:     0x06,
+    128:    0x07
+}
 # Operating mode (MODE)
 INA219_MODE_PDOWN         = 0
 INA219_MODE_S_TRIG        = 1
@@ -113,10 +129,10 @@ class INA219(object):
         self._cal_value = 8192
         # Write the configuration registers accordingly
         self.set_cal_register(self._cal_value)
-        self.set_bus_RNG(INA219_BRNG_16)
-        self.set_PGA(INA219_PG_1)
-        self.set_bus_ADC(INA219_ADC_BITS_12, INA219_ADC_SAMPLE_1)
-        self.set_shunt_ADC(INA219_ADC_BITS_12, INA219_ADC_SAMPLE_1)
+        self.set_bus_RNG(16)
+        self.set_PGA(40)
+        self.set_bus_ADC(12,1)
+        self.set_shunt_ADC(12,1)
         self.set_mode(INA219_MODE_SB_CONT)
 
 
@@ -133,10 +149,10 @@ class INA219(object):
         self._cal_value = 13434
         # Write the configuration registers accordingly
         self.set_cal_register(self._cal_value)
-        self.set_bus_RNG(INA219_BRNG_16)
-        self.set_PGA(INA219_PG_4)
-        self.set_bus_ADC(INA219_ADC_BITS_12, INA219_ADC_SAMPLE_1)
-        self.set_shunt_ADC(INA219_ADC_BITS_12, INA219_ADC_SAMPLE_1)
+        self.set_bus_RNG(16)
+        self.set_PGA(320)
+        self.set_bus_ADC(12, 1)
+        self.set_shunt_ADC(12, 1)
         self.set_mode(INA219_MODE_SB_CONT)
 
 
@@ -159,10 +175,12 @@ class INA219(object):
     def read_ina_register(self, register):
         buf = []
         buf = self.read_register_raw(register)
-        if (buf[0] & 0x80):
-            return - 0x10000 + ((buf[0] << 8) | (buf[1]))
-        else:
-            return (buf[0] << 8) | (buf[1])
+        # Convert to 16-bit signed value.
+        value = (buf[0]<< 8) | buf[1]
+        # Check for sign bit and turn into a negative value if set.
+        if value & 0x8000 != 0:
+            value -= 1 << 16
+        return value
 
 
     # Write a 16-bit value to an I2C register of the INA.
@@ -247,12 +265,12 @@ class INA219(object):
     # @param[out] True in case of success; otherwise False.
     def set_bus_RNG(self, brng):
         # Check the given value
-        if (brng<INA219_BRNG_16) or (brng>INA219_BRNG_32):
-            return
+        if brng not in INA219_BRNG:
+            raise ValueError('Valid BRNG values are:  16 and 32')
         # Read config register value
         reg = self.read_ina_register(INA219_REG_CONFIG)
         # Prepare new register value
-        conf = (reg & 0xDFFF) | (brng<<13)
+        conf = (reg & 0xDFFF) | (INA219_BRNG[brng]<<INA219_BRNG_OFFSET)
         # Write new register value
         self.write_register(INA219_REG_CONFIG, conf)
 
@@ -265,12 +283,12 @@ class INA219(object):
     # @param[out] True in case of success; otherwise False.
     def set_PGA(self, pg):
         # Check the given value
-        if (pg<INA219_PG_1) or (pg>INA219_PG_8):
-            return
+        if pg not in INA219_PG:
+            raise ValueError('Valid PG values are:  40, 80, 160, and 320 [mV]')
         # Read config register value
         reg = self.read_ina_register(INA219_REG_CONFIG)
         # Prepare new register value
-        conf = (reg & 0xE7FF) | (pg<<11)
+        conf = (reg & 0xE7FF) | (INA219_PG[pg]<<INA219_PG_OFFSET)
         # Write new register value
         self.write_register(INA219_REG_CONFIG, conf)
 
@@ -283,21 +301,21 @@ class INA219(object):
     # @param[in] averaging ADC averaging register value (use pre-defined values!).
     # @param[out] True in case of success; otherwise False.
     def set_bus_ADC(self, bits, sample):
-        # Check the given value
-        if (bits<INA219_ADC_BITS_9) or (bits>INA219_ADC_BITS_12):
-            return
-        if (sample<INA219_ADC_SAMPLE_1) or (sample>INA219_ADC_SAMPLE_128):
-            return
+        # Check the given values
+        if bits not in INA219_ADC_BITS:
+            raise ValueError('Valid resolution values are:  9, 10, 11, and 12')
+        if sample not in INA219_ADC_SAMPLE:
+            raise ValueError('Valid sample values are:  1, 2, 4, 8, 16, 32, 64, 128')
         # Get new ADC configuration
         value = 0
-        if(bits < INA219_ADC_BITS_12):
-            value = bits
+        if(bits < 12):
+            value = INA219_ADC_BIT[bits]
         else:
-            value = 0x80 | sample
+            value = 0x80 | INA219_ADC_SAMPLE[sample]
         # Read config register value
         reg = self.read_ina_register(INA219_REG_CONFIG)
         # Prepare new register value
-        conf = (reg & 0xF87F) | (value<<7)
+        conf = (reg & 0xF87F) | (value<<INA219_BADC_OFFSET)
         # Write new register value
         self.write_register(INA219_REG_CONFIG, conf)
 
@@ -310,21 +328,21 @@ class INA219(object):
     # @param[in] averaging ADC averaging register value (use pre-defined values!).
     # @param[out] True in case of success; otherwise False.
     def set_shunt_ADC(self, bits, sample):
-        # Check the given value
-        if (bits<INA219_ADC_BITS_9) or (bits>INA219_ADC_BITS_12):
-            return
-        if (sample<INA219_ADC_SAMPLE_1) or (sample>INA219_ADC_SAMPLE_128):
-            return
+        # Check the given values
+        if bits not in INA219_ADC_BITS:
+            raise ValueError('Valid resolution values are:  9, 10, 11, and 12')
+        if sample not in INA219_ADC_SAMPLE:
+            raise ValueError('Valid sample values are:  1, 2, 4, 8, 16, 32, 64, 128')
         # Get new ADC configuration
         value = 0
-        if(bits < INA219_ADC_BITS_12):
-            value = bits
+        if(bits < 12):
+            value = INA219_ADC_BIT[bits]
         else:
-            value = 0x80 | sample
+            value = 0x80 | INA219_ADC_SAMPLE[sample]
         # Read config register value
         reg = self.read_ina_register(INA219_REG_CONFIG)
         # Prepare new register value
-        conf = (reg & 0xFF87) | (value<<3)
+        conf = (reg & 0xF87F) | (value<<INA219_SADC_OFFSET)
         # Write new register value
         self.write_register(INA219_REG_CONFIG, conf)
 
@@ -338,7 +356,7 @@ class INA219(object):
     def set_mode(self, mode):
         # Check the given value
         if (mode<INA219_MODE_PDOWN) or (mode>INA219_MODE_SB_CONT):
-            return
+            raise ValueError('Invalid mode value!')
         # Read config register value
         reg = self.read_ina_register(INA219_REG_CONFIG)
         # Prepare new register value
