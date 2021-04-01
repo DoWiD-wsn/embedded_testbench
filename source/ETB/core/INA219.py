@@ -81,6 +81,9 @@ INA219_MODE_ADC_OFF       = 4
 INA219_MODE_S_CONT        = 5
 INA219_MODE_B_CONT        = 6
 INA219_MODE_SB_CONT       = 7
+# Calibration (CAL)
+INA219_CAL_400MA          = 0
+INA219_CAL_5A             = 1
 
 
 #####
@@ -111,16 +114,29 @@ class INA219(object):
         # @var _cal_value
         # Objects own calibration value
         self._cal_value = 0
-        
         # Calibrate for 16V maximum bus voltage and 400mA maximum current
-        self.calibrate_16V_400mA()
+        self.calibrate(INA219_CAL_400MA)
 
 
     ###
     # Calibrate for max 16V 400mA measurements.
     #
     # @param[in] self The object pointer.
-    def calibrate_16V_400mA(self):
+    # @param[in] imax Maximum current (default: 400mA)
+    def calibrate(self,imax=INA219_CAL_400MA):
+        # Calibrate the INA accordingly
+        if imax==INA219_CAL_400MA:
+            self._calibrate_16V_400mA()
+        elif imax==INA219_CAL_5A:
+            self._calibrate_16V_5A()
+        else:
+            raise ValueError('Valid imax values are: 400mA and 5A')
+
+    ###
+    # Calibrate for max 16V 400mA measurements.
+    #
+    # @param[in] self The object pointer.
+    def _calibrate_16V_400mA(self):
         # Current LSB = 50uA per bit
         self._current_lsb = 0.05
         # Power LSB = 1mW per bit
@@ -140,7 +156,7 @@ class INA219(object):
     # Calibrate for max 16V 5A measurements.
     #
     # @param[in] self The object pointer.
-    def begin_16V_5A(self):
+    def _calibrate_16V_5A(self):
         ## Current LSB = 152.4uA per bit
         self._current_lsb = 0.1524
         # Power LSB = 3.048mW per bit
