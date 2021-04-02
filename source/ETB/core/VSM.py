@@ -460,10 +460,9 @@ class VSM(object):
                 # Timeout
                 return False
             # wait for 10ms
-            sleep(0.01)
+            time.sleep(0.01)
             # increment timeout counter by 10ms
             passed += 10
-        # Everything ok
         return True
     ###
     # Wait for power-is-good (MIC) with timeout [ms] of channel 1 (wrapper).
@@ -513,7 +512,7 @@ class VSM(object):
                 # Timeout
                 return False
             # wait for 10ms
-            sleep(0.01)
+            time.sleep(0.01)
             # increment timeout counter by 10ms
             passed += 10
         # Everything ok

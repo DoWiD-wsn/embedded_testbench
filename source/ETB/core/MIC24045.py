@@ -88,7 +88,7 @@ MIC24045_SS = {
 # @class    MIC24045
 # @brief    MIC24045 DC/DC converter class
 #
-# Class for the MIC24045 DC/DC converte used on the ETB.
+# Class for the MIC24045 DC/DC converter used on the ETB.
 class MIC24045(object):
     ###
     # The constructor.
@@ -321,7 +321,7 @@ class MIC24045(object):
     def set_current_limit(self,ilim):
         # Check given parameter
         if ilim not in MIC24045_ILIM:
-            raise ValueError('Valid ILIM values are:  2, 3, 4, and 5')
+            raise ValueError('Valid ILIM values are: 2, 3, 4, and 5')
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
@@ -342,7 +342,7 @@ class MIC24045(object):
     def set_frequency(self,freq):
         # Check given parameter
         if freq not in MIC24045_FREQ:
-            raise ValueError('Valid FREQ values are:  310, 400, 500, 570, 660, 780, 970, 1200 [kHz]')
+            raise ValueError('Valid FREQ values are: 310, 400, 500, 570, 660, 780, 970, 1200 [kHz]')
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
@@ -363,7 +363,7 @@ class MIC24045(object):
     def set_startup_delay(self,delay):
         # Check given parameter
         if delay not in MIC24045_SUD:
-            raise ValueError('Valid SD values are:  0, 0.5, 1, 2, 4, 6, 8, 10 [ms]')
+            raise ValueError('Valid SD values are: 0, 0.5, 1, 2, 4, 6, 8, 10 [ms]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
@@ -384,7 +384,7 @@ class MIC24045(object):
     def set_voltage_margins(self,margin):
         # Check given parameter
         if margin not in MIC24045_MRG:
-            raise ValueError('Valid MRG values are:  0, -5, +5 [%]')
+            raise ValueError('Valid MRG values are: 0, -5, +5 [%]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
@@ -405,7 +405,7 @@ class MIC24045(object):
     def set_soft_start_slope(self,slope):
         # Check given parameter
         if slope not in MIC24045_SS:
-            raise ValueError('Valid SS values are:  0.16, 0.38, 0.76, 1.5 [V/ms]')
+            raise ValueError('Valid SS values are: 0.16, 0.38, 0.76, 1.5 [V/ms]')
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
