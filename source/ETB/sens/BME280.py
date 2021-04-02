@@ -504,11 +504,11 @@ class BME280(object):
         if not self.wait_for_ready(timeout):
             return False
         # Read the temperature bytes
-        MSB = self._i2c_read_U8(BME280_REG_T_MSB)
-        LSB = self._i2c_read_U8(BME280_REG_T_LSB)
-        XLSB = self._i2c_read_U8(BME280_REG_T_XLSB)
+        msb = self._i2c_read_U8(BME280_REG_T_MSB)
+        lsb = self._i2c_read_U8(BME280_REG_T_LSB)
+        xlsb = self._i2c_read_U8(BME280_REG_T_XLSB)
         # Return the raw temperature value
-        return (((MSB << 16) | (LSB << 8) | XLSB) >> 4)
+        return (((msb << 16) | (lsb << 8) | xlsb) >> 4)
 
     ###
     # Read the raw (uncompensated) pressure value.
@@ -521,11 +521,11 @@ class BME280(object):
         if not self.wait_for_ready(timeout):
             return False
         # Read the pressure bytes
-        MSB = self._i2c_read_U8(BME280_REG_P_MSB)
-        LSB = self._i2c_read_U8(BME280_REG_P_LSB)
-        XLSB = self._i2c_read_U8(BME280_REG_P_XLSB)
+        msb = self._i2c_read_U8(BME280_REG_P_MSB)
+        lsb = self._i2c_read_U8(BME280_REG_P_LSB)
+        xlsb = self._i2c_read_U8(BME280_REG_P_XLSB)
         # Return the raw pressure value
-        return (((MSB << 16) | (LSB << 8) | XLSB) >> 4)
+        return (((msb << 16) | (lsb << 8) | xlsb) >> 4)
 
 
     ###
@@ -539,10 +539,10 @@ class BME280(object):
         if not self.wait_for_ready(timeout):
             return False
         # Read the humidity bytes
-        MSB = self._i2c_read_U8(BME280_REG_H_MSB)
-        LSB = self._i2c_read_U8(BME280_REG_H_LSB)
+        msb = self._i2c_read_U8(BME280_REG_H_MSB)
+        lsb = self._i2c_read_U8(BME280_REG_H_LSB)
         # Return the raw humidity value
-        return ((MSB << 8) | LSB)
+        return ((msb << 8) | lsb)
 
 
     ###
