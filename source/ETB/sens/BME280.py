@@ -467,8 +467,8 @@ class BME280(object):
         self.dig_H2 = self._i2c_read_S16LE(BME280_REG_DIG_H2)
         self.dig_H3 = self._i2c_read_U8(BME280_REG_DIG_H3)
         self.dig_H6 = self._i2c_read_S8(BME280_REG_DIG_H7)
-        self.dig_H4 = (self._i2c_read_S8(BME280_REG_DIG_H4) << 4) | (self._i2c_read_U8(BME280_REG_DIG_H5) & 0x0F)
-        self.dig_H5 = (self._i2c_read_S8(BME280_REG_DIG_H6)<< 4) | (self._i2c_read_U8(BME280_REG_DIG_H5) >> 4 & 0x0F)
+        self.dig_H4 = (self._i2c_read_S8(BME280_REG_DIG_H4)<<4) | (self._i2c_read_U8(BME280_REG_DIG_H5) & 0x0F)
+        self.dig_H5 = (self._i2c_read_S8(BME280_REG_DIG_H6)<<4) | (self._i2c_read_U8(BME280_REG_DIG_H5)>>4 & 0x0F)
 
 
     ###
