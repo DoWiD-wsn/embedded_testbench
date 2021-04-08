@@ -1,8 +1,7 @@
 #####
-# @package INA219
 # @brief   INA219 wattmeter
 #
-# Package containing the INA219 wattmeter class used on the ETB.
+# Module containing the INA219 wattmeter class used on the ETB.
 #
 # @file     /etb/core/INA219.py
 # @author   $Author: Dominik Widhalm $

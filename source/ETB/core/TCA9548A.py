@@ -1,8 +1,7 @@
 #####
-# @package TCA9548A
 # @brief   TCA9548A I2C multiplexer
 #
-# Package containing the TCA9548A multiplexer class used on the ETB.
+# Module containing the TCA9548A multiplexer class used on the ETB.
 #
 # @file     /etb/core/TCA9548A.py
 # @author   $Author: Dominik Widhalm $

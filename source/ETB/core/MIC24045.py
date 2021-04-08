@@ -1,8 +1,7 @@
 #####
-# @package MIC24045
 # @brief   MIC24045 DC/DC converter
 #
-# Package containing the MIC24045 DC/DC converter class used on the ETB.
+# Module containing the MIC24045 DC/DC converter class used on the ETB.
 #
 # @file     /etb/core/MIC24045.py
 # @author   $Author: Dominik Widhalm $

@@ -1,8 +1,7 @@
 #####
-# @package ADS1115
 # @brief   ADS1115 16-bit ADC
 #
-# Package containing the ADS1115 16-bit ADC class used on the ETB.
+# Module containing the ADS1115 16-bit ADC class used on the ETB.
 #
 # @file     /etb/core/ADS1115.py
 # @author   $Author: Dominik Widhalm $

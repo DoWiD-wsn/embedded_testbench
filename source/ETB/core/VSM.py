@@ -1,8 +1,7 @@
 #####
-# @package VSM
 # @brief   VSM voltage scaling module (4x)
 #
-# Package containing the VSM voltage scaling module class used on the ETB.
+# Module containing the VSM voltage scaling module class used on the ETB.
 #
 # @file     /etb/core/VSM.py
 # @author   $Author: Dominik Widhalm $
