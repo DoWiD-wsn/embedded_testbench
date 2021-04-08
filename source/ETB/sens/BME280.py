@@ -1,9 +1,9 @@
 #####
 # @brief   BME280 environmental sensor
 #
-# Module containing the BME280 environmental sensor class used on the ETB.
+# Module containing the BME280 environmental sensor class.
 #
-# @file     /etb/core/BME280.py
+# @file     /etb/sens/BME280.py
 # @author   $Author: Dominik Widhalm $
 # @version  $Revision: 1.0 $
 # @date     $Date: 2021/04/02 $
@@ -135,13 +135,13 @@ class BME280(object):
     # @param[in] busnum specific I2C bus number (default: 1)
     def __init__(self, address=0x76, busnum=1):
         # @var __i2c_address
-        # Objects own I2C address
+        # Object's own I2C address
         self.__i2c_address = address
         # @var __bus
-        # Objects own I2C bus number
+        # Object's own I2C bus number
         self.__bus = smbus.SMBus(busnum)
         # @var __t_fine
-        # Objects own fine resolution temperature value (initially 0.0)
+        # Object's own fine resolution temperature value (initially 0.0)
         self.__t_fine = 0.0
 
         # Load calibration values
@@ -549,7 +549,7 @@ class BME280(object):
     #
     # @param[in] self The object pointer.
     # @param[out] Temperature value [°C] in case of success; otherwise False.
-    def get_temperature(self):
+    def read_temperature(self):
         # Get the raw temperature reading
         raw = self._get_raw_temperature()
         # Calculate the compensated temperature value (see datasheet 8.2)
@@ -566,7 +566,7 @@ class BME280(object):
     #
     # @param[in] self The object pointer.
     # @param[out] Pressure value [hPa] in case of success; otherwise False.
-    def get_pressure(self):
+    def read_pressure(self):
         # Get the raw temperature reading
         raw = self._get_raw_pressure()
         # Check if the fine resolution temperature value is not set yet
@@ -599,7 +599,7 @@ class BME280(object):
     #
     # @param[in] self The object pointer.
     # @param[out] Humidity value [% RH] in case of success; otherwise False.
-    def get_humidity(self):
+    def read_humidity(self):
         # Get the raw humidity reading
         raw = self._get_raw_humidity()
         # Check if the fine resolution temperature value is not set yet
@@ -624,7 +624,7 @@ class BME280(object):
     #
     # @param[in] self The object pointer.
     # @param[out] Dewpoint value [°C] in case of success; otherwise False.
-    def get_dewpoint(self):
+    def read_dewpoint(self):
         # Read temperature value
         celsius = self.get_temperature()
         # Read humidity value

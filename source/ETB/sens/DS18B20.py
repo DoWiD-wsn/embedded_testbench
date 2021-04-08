@@ -1,9 +1,9 @@
 #####
 # @brief   DS18B20 temperature sensor
 #
-# Module containing the DS18B20 temperature sensor class used on the ETB.
+# Module containing the DS18B20 temperature sensor class.
 #
-# @file     /etb/core/DS18B20.py
+# @file     /etb/sens/DS18B20.py
 # @author   $Author: Dominik Widhalm $
 # @version  $Revision: 1.0 $
 # @date     $Date: 2021/04/08 $

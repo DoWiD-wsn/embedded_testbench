@@ -1,9 +1,9 @@
 #####
 # @brief   LM75 temperature sensor
 #
-# Module containing the LM75 temperature sensor class used on the ETB.
+# Module containing the LM75 temperature sensor class.
 #
-# @file     /etb/core/LM75.py
+# @file     /etb/sens/LM75.py
 # @author   $Author: Dominik Widhalm $
 # @version  $Revision: 1.0 $
 # @date     $Date: 2021/04/08 $
