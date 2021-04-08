@@ -1,8 +1,7 @@
 #####
-# @package BME280
 # @brief   BME280 environmental sensor
 #
-# Package containing the BME280 environmental sensor class used on the ETB.
+# Module containing the BME280 environmental sensor class used on the ETB.
 #
 # @file     /etb/core/BME280.py
 # @author   $Author: Dominik Widhalm $
@@ -126,7 +125,7 @@ BME280_RESET_VALUE      = 0xB6
 # @class    BME280
 # @brief    BME280 environmental sensor
 #
-# Class for the BME280 environmental sensor used on the ETB.
+# Class for the BME280 environmental sensor.
 class BME280(object):
     ###
     # The constructor.
