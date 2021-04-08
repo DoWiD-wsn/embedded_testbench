@@ -98,70 +98,8 @@ Follow these steps to enable the UART interface (see also [here](https://www.ele
 
 ## Python Dependencies
 
-Dependency graph (created with [Graphviz](http://www.webgraphviz.com/)):
+Dependency graph:
 ![PCB front (/media/python/dependency_graph.svg)](../media/python/dependency_graph.svg)
-
-```graphviz
-digraph g{
-    rankdir=LR;
-    // ETB
-    ETB -> ExpSetup;
-    ETB -> LM75;
-    ETB -> MCUutil;
-    ETB -> STEMMA;
-    // ExpSetup
-    ExpSetup -> "time.sleep";
-    ExpSetup -> DS18B20;
-    ExpSetup -> I2Chelper;
-    ExpSetup -> INA219;
-    ExpSetup -> JT103;
-    ExpSetup -> MIC24045;
-    ExpSetup -> TCA9548A;
-    // DS18B20
-    DS18B20 -> "time.sleep";
-    // I2Chelper
-    I2Chelper -> smbus;
-    // INA219
-    INA219 -> smbus;
-    // JT103
-    JT103 -> Adafruit_ADS1x15;
-    JT103 -> "math.log";
-    // LM75
-    LM75 -> smbus;
-    // MCUutil
-    MCUutil -> subprocess;
-    MCUutil -> os;
-    MCUutil -> "shutil.which";
-    MCUutil -> "RPi.GPIO";
-    MCUutil -> "time.sleep";
-    // MIC24045
-    MIC24045 -> "math.floor";
-    MIC24045 -> smbus;
-    MIC24045 -> "RPi.GPIO";
-    // STEMMA
-    STEMMA -> "board.SCL,SDA";
-    STEMMA -> busio;
-    STEMMA -> "adafruit_seesaw.seesaw.Seesaw";
-    // TCA9548A
-    TCA9548A -> smbus;
-    
-    // External standard libraries
-    "time.sleep" [fillcolor=white,style=filled];
-    "math.log" [fillcolor=white,style=filled];
-    subprocess [fillcolor=white,style=filled];
-    os [fillcolor=white,style=filled];
-    "shutil.which" [fillcolor=white,style=filled];
-    "math.floor" [fillcolor=white,style=filled];
-
-    // External additional libraries
-    smbus [shape=box,fillcolor=lightgray,color=black,style=filled];
-    Adafruit_ADS1x15 [shape=box,fillcolor=lightgray,color=black,style=filled];
-    "RPi.GPIO" [shape=box,fillcolor=lightgray,color=black,style=filled];
-    "board.SCL,SDA" [shape=box,fillcolor=lightgray,color=black,style=filled];
-    busio [shape=box,fillcolor=lightgray,color=black,style=filled];
-    "adafruit_seesaw.seesaw.Seesaw" [shape=box,fillcolor=lightgray,color=black,style=filled];
-}
-```
 
 The test node runs python scripts and uses the raspberry's GPIOs, the one-wire interface, and the two-wire interface (I2C).
 For this purpose the following libraries are needed:
@@ -175,9 +113,6 @@ For this purpose the following libraries are needed:
     `python3 -m pip install mysql-connector-python`
 * Zigbee:  
     `python3 -m pip install digi-xbee`
-* Adafruit:  
-    `python3 -m pip install adafruit-circuitpython-seesaw`  
-    `python3 -m pip install adafruit-ads1x15`
 * Matplotlib:  
     `sudo apt install python3-tk`  
     `python3 -m pip install matplotlib numpy scipy`
