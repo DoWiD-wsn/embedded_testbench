@@ -36,10 +36,10 @@ class TCA9548A(object):
     # @param[in] busnum specific I2C bus number (default: 1)
     def __init__(self, address=0x70, busnum=1):
         # @var __i2c_address
-        # Objects own I2C address
+        # Object's own I2C address
         self.__i2c_address = address
         # @var __bus
-        # Objects own I2C bus number
+        # Object's own I2C bus number
         self.__bus = smbus.SMBus(busnum)
 
     ###

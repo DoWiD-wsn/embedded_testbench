@@ -99,19 +99,19 @@ class INA219(object):
     # @param[in] busnum specific I2C bus number (default: 1)
     def __init__(self, address=0x40, busnum=1):
         # @var __i2c_address
-        # Objects own I2C address
+        # Object's own I2C address
         self.__i2c_address = address
         # @var __bus
-        # Objects own I2C bus number
+        # Object's own I2C bus number
         self.__bus = smbus.SMBus(busnum)
         # @var _current_lsb
-        # Objects own current value for LSB (mA)
+        # Object's own current value for LSB (mA)
         self._current_lsb = 0
         # @var _power_lsb
-        # Objects own power value for LSB (W)
+        # Object's own power value for LSB (W)
         self._power_lsb = 0
         # @var _cal_value
-        # Objects own calibration value
+        # Object's own calibration value
         self._cal_value = 0
         # Calibrate for 16V maximum bus voltage and 400mA maximum current
         self.calibrate(INA219_CAL_400MA)
