@@ -82,6 +82,8 @@ For the PCB design the following rules were used:
 
 ## Components and Libraries
 
+An interactive BOM can be found in the `/kicad/bom/` directory (see [here](../kicad/bom/embedded_testbench.html); created with [InteractiveHtmlBom](https://github.com/openscopeproject/InteractiveHtmlBom)).
+
 | Reference | Value | Symbol Library | Symbol | Footprint Library | Footprint |
 |-----------|-------|----------------|--------|-------------------|-----------|
 | C9,C17,C25,C33 | 47pF | Device | C | Capacitor_SMD | C_0603_1608Metric |
