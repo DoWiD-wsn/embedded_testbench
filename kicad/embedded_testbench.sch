@@ -1420,7 +1420,7 @@ F 1 "12V INPUT" H 850 7550 50  0000 C CNN
 F 2 "Connector_BarrelJack:BarrelJack_Horizontal" H 850 7310 50  0001 C CNN
 F 3 "~" H 850 7310 50  0001 C CNN
 	1    800  7350
-	1    0    0    1   
+	1    0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J4
@@ -2775,10 +2775,6 @@ Wire Wire Line
 Connection ~ 3300 6550
 Wire Wire Line
 	3800 6550 3900 6550
-Text Label 1150 7350 0    50   ~ 0
-VIN
-Wire Wire Line
-	1100 7350 1150 7350
 $Comp
 L Device:R R36
 U 1 1 608C7F0A
@@ -2863,4 +2859,9 @@ Wire Wire Line
 Connection ~ 7900 1400
 Wire Wire Line
 	7900 1400 7900 1600
+Wire Wire Line
+	1100 7350 1200 7350
+Wire Wire Line
+	1200 7350 1200 7450
+Connection ~ 1200 7450
 $EndSCHEMATC
