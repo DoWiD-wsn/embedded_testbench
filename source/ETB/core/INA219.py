@@ -39,7 +39,7 @@ INA219_BRNG = {
     16:     0x00,
     32:     0x01
 }
-INA219_BRNG_DEFAULT        = INA219_BRNG[32]
+INA219_BRNG_DEFAULT        = 32
 # PGA gain and range for the shunt voltage (PG)
 INA219_PG_OFFSET          = 11
 INA219_PG = {
@@ -48,7 +48,7 @@ INA219_PG = {
     160:    0x02,
     320:    0x03
 }
-INA219_PG_DEFAULT         = INA219_PG[320]
+INA219_PG_DEFAULT         = 320
 # ADC (BADC/SADC)
 INA219_BADC_OFFSET        = 7
 INA219_SADC_OFFSET        = 3

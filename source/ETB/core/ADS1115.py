@@ -137,7 +137,7 @@ class ADS1115(object):
     # @param[in] self The object pointer.
     # @param[in] register Register address.
     # @param[out] 16-bit register value in case of success; otherwise False.
-    def read_ads_register(self, register):
+    def read_register(self, register):
         buf = []
         buf = self.read_register_raw(register)
         # Convert to 16-bit signed value.
@@ -185,11 +185,8 @@ class ADS1115(object):
         # Disable comparator mode
         config |= ADS1115_COMP_QUE_DEFAULT
         # Write configuration value to the ADS
-        
-        print("DBG: config register = %X" % (config))
-        
         self.write_register(ADS1115_REG_CONVERSION,config)
         # Wait for the ADC sample to finish
         time.sleep(1.0/data_rate+0.0001)
         # Get the result from the ADS
-        return self.read_ads_register(ADS1115_REG_CONVERSION)
+        return self.read_register(ADS1115_REG_CONVERSION)
