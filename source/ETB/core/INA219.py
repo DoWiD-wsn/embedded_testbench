@@ -113,8 +113,6 @@ class INA219(object):
         # @var _cal_value
         # Object's own calibration value
         self._cal_value = 0
-        # Calibrate for 16V maximum bus voltage and 400mA maximum current
-        self.calibrate(INA219_CAL_400MA)
 
 
     ###

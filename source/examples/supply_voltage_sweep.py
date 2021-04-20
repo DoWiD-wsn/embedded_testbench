@@ -4,4 +4,5 @@
 import sys
 sys.path.insert(1, '../')
 # Import the ETB module
-import ETB
+from ETB import ETB
+

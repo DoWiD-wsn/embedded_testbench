@@ -103,8 +103,8 @@ class LM75(object):
         # First, read the value as unsigned word
         result = self._i2c_read_U16(register, little_endian)
         # Check for sign bit and turn into a negative value if set.
-        if value & 0x8000 != 0:
-            value -= 1 << 16
+        if result & 0x8000 != 0:
+            result -= 1 << 16
         return result
 
 

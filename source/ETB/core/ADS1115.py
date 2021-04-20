@@ -45,7 +45,7 @@ ADS1115_MUX = {
     2:   0x0006,
     3:   0x0007
 }
-ADS1115_MUX_DEFAULT         = ADS1115_MUX[0/1]
+ADS1115_MUX_DEFAULT         = 0/1
 # Programmable gain amplifier configuration (PGA)
 ADS1115_PGA_OFFSET          = 9
 ADS1115_PGA = {
@@ -56,7 +56,7 @@ ADS1115_PGA = {
     8:   0x0004,
     16:  0x0005
 }
-ADS1115_PGA_DEFAULT         = ADS1115_PGA[2]
+ADS1115_PGA_DEFAULT         = 2
 # Device operating mode (MODE)
 ADS1115_MODE_OFFSET         = 8
 ADS1115_MODE_CONTINUOUS     = 0x0000
@@ -74,7 +74,7 @@ ADS1115_DR = {
     475:  0x0006,
     860:  0x0007
 }
-ADS1115_DR_DEFAULT          = ADS1115_DR[128]
+ADS1115_DR_DEFAULT          = 128
 # Comparator mode (COMP_MODE)
 ADS1115_COMP_MODE_OFFSET    = 4
 ADS1115_COMP_MODE_DEFAULT   = 0x0000
@@ -185,7 +185,10 @@ class ADS1115(object):
         # Disable comparator mode
         config |= ADS1115_COMP_QUE_DEFAULT
         # Write configuration value to the ADS
-        self.write_register(ADS1115_REG_CONVERSION,config):
+        
+        print("DBG: config register = %X" % (config))
+        
+        self.write_register(ADS1115_REG_CONVERSION,config)
         # Wait for the ADC sample to finish
         time.sleep(1.0/data_rate+0.0001)
         # Get the result from the ADS

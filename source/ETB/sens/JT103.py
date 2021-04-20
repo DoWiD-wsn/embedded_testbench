@@ -22,7 +22,7 @@ from math import log
 import sys
 sys.path.insert(1, '../core/')
 # Import the ADS1115 module
-import ADS1115
+from ETB.core.ADS1115 import *
 
 
 ##### GLOBAL VARIABLES #####
@@ -66,7 +66,7 @@ class JT103(object):
         self.__channel = channel
         # @var __adc
         # ADC object
-        self.__adc = ADS1115(address=self.__address, busnum=self.__busnum)
+        self.__adc = ADS1115(address=address, busnum=busnum)
 
 
     ###
@@ -75,7 +75,7 @@ class JT103(object):
     # @param[in] self The object pointer.
     # @param[out] Raw ADC value in case of success; otherwise False.
     def _get_raw_value(self):
-        return self.__adc.read_channel(self.__channel)
+        return self.__adc.read_channel(channel=self.__channel)
 
 
     ###
@@ -86,6 +86,9 @@ class JT103(object):
     def read_temperature(self):
         # Read the raw ADC value
         data = self._get_raw_value()
+        
+        print("DBG: data = %d" % (data))
+        
         # Check if the ADC returned a valid conversion result
         if data:
             # Calculate the thermistor's resistance

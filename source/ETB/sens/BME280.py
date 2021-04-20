@@ -195,8 +195,8 @@ class BME280(object):
         # First, read value as unsigned byte
         result = self._i2c_read_U8(register)
         # Check for sign bit and turn into a negative value if set.
-        if value & 0x80 != 0:
-            value -= 1 << 8
+        if result & 0x80 != 0:
+            result -= 1 << 8
         return result
 
 
@@ -237,8 +237,8 @@ class BME280(object):
         # First, read the value as unsigned word
         result = self._i2c_read_U16(register, little_endian)
         # Check for sign bit and turn into a negative value if set.
-        if value & 0x8000 != 0:
-            value -= 1 << 16
+        if result & 0x8000 != 0:
+            result -= 1 << 16
         return result
 
 
