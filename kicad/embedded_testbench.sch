@@ -1500,28 +1500,6 @@ F 3 "~" H 3900 1850 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x02 J13
-U 1 1 6046ED61
-P 6100 2150
-F 0 "J13" H 6100 1950 50  0000 C CNN
-F 1 "5V" H 6100 2250 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2150 50  0001 C CNN
-F 3 "~" H 6100 2150 50  0001 C CNN
-	1    6100 2150
-	-1   0    0    1   
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x02 J14
-U 1 1 6046FABA
-P 6100 2550
-F 0 "J14" H 6100 2350 50  0000 C CNN
-F 1 "3V3" H 6100 2650 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2550 50  0001 C CNN
-F 3 "~" H 6100 2550 50  0001 C CNN
-	1    6100 2550
-	-1   0    0    1   
-$EndComp
-$Comp
 L Connector_Generic:Conn_01x02 J3
 U 1 1 604708EE
 P 1600 7550
@@ -2182,17 +2160,6 @@ Wire Wire Line
 	6500 2450 6300 2450
 Text Notes 6750 3100 2    50   ~ 0
 Supply\nDomains
-$Comp
-L Connector_Generic:Conn_01x02 J15
-U 1 1 60FEF570
-P 6100 2950
-F 0 "J15" H 6100 2750 50  0000 C CNN
-F 1 "GND" H 6100 3050 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2950 50  0001 C CNN
-F 3 "~" H 6100 2950 50  0001 C CNN
-	1    6100 2950
-	-1   0    0    1   
-$EndComp
 Text Notes 6000 2900 2    50   ~ 0
 GND
 Text Notes 6000 3000 2    50   ~ 0
@@ -2794,10 +2761,10 @@ Wire Wire Line
 	6800 1300 7250 1300
 Connection ~ 7250 1300
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR0110
 U 1 1 6087D1B6
 P 9500 2600
-F 0 "#PWR?" H 9500 2450 50  0001 C CNN
+F 0 "#PWR0110" H 9500 2450 50  0001 C CNN
 F 1 "+5V" H 9650 2700 50  0000 C CNN
 F 2 "" H 9500 2600 50  0000 C CNN
 F 3 "" H 9500 2600 50  0000 C CNN
@@ -2831,10 +2798,10 @@ F 3 "~" H 7600 1400 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR0111
 U 1 1 606154BD
 P 7850 700
-F 0 "#PWR?" H 7850 550 50  0001 C CNN
+F 0 "#PWR0111" H 7850 550 50  0001 C CNN
 F 1 "+5V" V 7900 700 50  0000 C CNN
 F 2 "" H 7850 700 50  0000 C CNN
 F 3 "" H 7850 700 50  0000 C CNN
@@ -2864,4 +2831,37 @@ Wire Wire Line
 Wire Wire Line
 	1200 7350 1200 7450
 Connection ~ 1200 7450
+$Comp
+L Connector_Generic:Conn_01x02 J15
+U 1 1 60FEF570
+P 6100 2950
+F 0 "J15" H 6100 2750 50  0000 C CNN
+F 1 "GND" H 6100 3050 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2950 50  0001 C CNN
+F 3 "~" H 6100 2950 50  0001 C CNN
+	1    6100 2950
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J14
+U 1 1 6046FABA
+P 6100 2550
+F 0 "J14" H 6100 2350 50  0000 C CNN
+F 1 "3V3" H 6100 2650 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2550 50  0001 C CNN
+F 3 "~" H 6100 2550 50  0001 C CNN
+	1    6100 2550
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J13
+U 1 1 6046ED61
+P 6100 2150
+F 0 "J13" H 6100 1950 50  0000 C CNN
+F 1 "5V" H 6100 2250 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6100 2150 50  0001 C CNN
+F 3 "~" H 6100 2150 50  0001 C CNN
+	1    6100 2150
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC
