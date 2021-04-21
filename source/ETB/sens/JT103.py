@@ -89,9 +89,9 @@ class JT103(object):
         # Check if the ADC returned a valid conversion result
         if data:
             # Calculate the thermistor's resistance
-            R_thermistor = self.JT103_R_BALANCE / ((self.JT103_MAX_ADC_CORRECT / float(data)) - 1.0)
+            R_thermistor = JT103_R_BALANCE / ((JT103_MAX_ADC_CORRECT / float(data)) - 1.0)
             # Use the beta equation to get the temperature
-            T_thermistor = ((self.JT103_BETA * self.JT103_TEMP_ROOM) / (self.JT103_JT103_BETA + (self.JT103_TEMP_ROOM * log(R_thermistor/self.JT103_R_ROOM)))) - self.JT103_TEMP_K2C
+            T_thermistor = ((JT103_BETA * JT103_TEMP_ROOM) / (JT103_BETA + (JT103_TEMP_ROOM * log(R_thermistor/JT103_R_ROOM)))) - JT103_TEMP_K2C
             # Return the temperature (in degree Celsius)
             return float(T_thermistor)
         else:

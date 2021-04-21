@@ -60,7 +60,7 @@ ADS1115_PGA_DEFAULT         = 2
 # Device operating mode (MODE)
 ADS1115_MODE_OFFSET         = 8
 ADS1115_MODE_CONTINUOUS     = 0x0000
-ADS1115_MODE_SINGLE         = 0x0001
+ADS1115_MODE_SINGLE         = 0x0100
 ADS1115_MODE_DEFAULT        = ADS1115_MODE_SINGLE
 # Data rate (DR)
 ADS1115_DR_OFFSET           = 5
@@ -136,7 +136,7 @@ class ADS1115(object):
     #
     # @param[in]    self            The object pointer.
     # @param[in]    register        Register address.
-    # @return       16-bit register value in case of success; otherwise False.
+    # @return       16-bit register value LE in case of success; otherwise False.
     def read_register(self, register):
         buf = []
         buf = self.read_register_raw(register)
@@ -145,9 +145,7 @@ class ADS1115(object):
             return False
         # Convert to 16-bit signed value.
         value = (buf[0]<< 8) | buf[1]
-        # Check for sign bit and turn into a negative value if set.
-        if value & 0x8000 != 0:
-            value -= 1 << 16
+        # Return register value
         return value
 
 
@@ -158,7 +156,7 @@ class ADS1115(object):
     # @param[in]    value           Register value to be written.
     # @return       True in case of success; otherwise False.
     def write_register(self, register, value):
-        return self.__bus.write_i2c_block_data(self.__i2c_address, register, [(value & 0xFF00) >> 8, value & 0x00FF])
+        return self.__bus.write_i2c_block_data(self.__i2c_address, register, [(value >> 8) & 0xFF, value & 0xFF])
 
 
     ###
@@ -189,11 +187,16 @@ class ADS1115(object):
         # Disable comparator mode
         config |= ADS1115_COMP_QUE_DEFAULT
         # Write configuration value to the ADS
-        ret = self.write_register(ADS1115_REG_CONVERSION,config)
+        ret = self.write_register(ADS1115_REG_CONFIG,config)
         # Check return value
         if ret is False:
             return False
         # Wait for the ADC sample to finish
-        time.sleep(1.0/data_rate+0.0001)
+        time.sleep((1.0 / data_rate) + 0.0001)
         # Get the result from the ADS
-        return self.read_register(ADS1115_REG_CONVERSION)
+        raw = self.read_register(ADS1115_REG_CONVERSION)
+        # Check for sign bit and turn into a negative value if set.
+        if raw & 0x8000 != 0:
+            raw -= 1 << 16
+        # Return conversion result
+        return raw
