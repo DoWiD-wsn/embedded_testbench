@@ -67,10 +67,10 @@ MCU_FL_CKSEL_MASK       = 0xF0
 ###
 # Flash a given binary to the MCU.
 #
-# @param[in] binary Path to the binary (.hex).
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    binary          Path to the binary (.hex).
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def MCU_flash(binary, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Check if the given binary exists
     if not os.path.isfile(binary):
@@ -92,10 +92,10 @@ def MCU_flash(binary, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Read the specified fuses of the MCU.
 #
-# @param[in] fuse Fuse byte to be read.
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] Fuse byte value in case of success; otherwise False.
+# @param[in]    fuse            Fuse byte to be read.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       Fuse byte value in case of success; otherwise False.
 def _MCU_get_fuse(fuse, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Check if the serial interface exists
     if not os.path.exists(port):
@@ -117,9 +117,9 @@ def _MCU_get_fuse(fuse, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Read the extended fuses of the MCU.
 #
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] Fuse byte value in case of success; otherwise False.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       Fuse byte value in case of success; otherwise False.
 def MCU_get_efuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     return _MCU_get_fuse('extended', port, mcu)
 
@@ -127,9 +127,9 @@ def MCU_get_efuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Read the high fuses of the MCU.
 #
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] Fuse byte value in case of success; otherwise False.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       Fuse byte value in case of success; otherwise False.
 def MCU_get_hfuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     return _MCU_get_fuse('high', port, mcu)
 
@@ -137,9 +137,9 @@ def MCU_get_hfuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Read the low fuses of the MCU.
 #
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] Fuse byte value in case of success; otherwise False.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       Fuse byte value in case of success; otherwise False.
 def MCU_get_lfuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     return _MCU_get_fuse('low', port, mcu)
 
@@ -147,11 +147,11 @@ def MCU_get_lfuse(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Program the specified fuses of the MCU.
 #
-# @param[in] fuse Fuse byte to be programmed.
-# @param[in] byte Fuse byte value.
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    fuse            Fuse byte to be programmed.
+# @param[in]    byte            Fuse byte value.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def _MCU_set_fuse(fuse, byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Check if the serial interface exists
     if not os.path.exists(port):
@@ -173,10 +173,10 @@ def _MCU_set_fuse(fuse, byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Program the extended fuses of the MCU.
 #
-# @param[in] byte Fuse byte.
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    byte            Fuse byte value.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def MCU_set_efuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     return _mcu_set_fuse('extended', byte, port, mcu)
 
@@ -184,10 +184,10 @@ def MCU_set_efuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Program the high fuses of the MCU.
 #
-# @param[in] byte Fuse byte.
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    byte            Fuse byte value.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def MCU_set_hfuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     return _mcu_set_fuse('high', byte, port, mcu)
 
@@ -195,10 +195,10 @@ def MCU_set_hfuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Program the low fuses of the MCU.
 #
-# @param[in] byte Fuse byte.
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    byte            Fuse byte value.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def MCU_set_lfuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Try to program the fuses
     return _mcu_set_fuse('low', byte, port, mcu)
@@ -207,12 +207,12 @@ def MCU_set_lfuse(byte, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Program the CLK source of the MCU.
 #
-# @param[in] src Clock source (INT/EXT).
-# @param[in] div8_en Enable clock division by 8.
-# @param[in] ckout_en Enable clock output (CKOUT).
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    src             Clock source (INT/EXT).
+# @param[in]    div8_en         Enable clock division by 8.
+# @param[in]    ckout_en        Enable clock output (CKOUT).
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def MCU_set_clksrc(src, div8_en=False, ckout_en=False, port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Check if the serial interface exists
     if not os.path.exists(port):
@@ -235,10 +235,10 @@ def MCU_set_clksrc(src, div8_en=False, ckout_en=False, port=PORT_DEFAULT, mcu=MC
         # Set SUT to 11
         byte |= (0b11<<MCU_FL_SUT_OFFSET)
     # Set the CKDIV8 bit
-    if not div8_en:
+    if div8_en is False:
         byte |= 0x80
     # Set the CKOUT bit
-    if not ckout_en:
+    if ckout_en is False:
         byte |= 0x40
     # Write the low fuses
     return MCU_set_lfuse(byte, port, mcu)
@@ -247,9 +247,9 @@ def MCU_set_clksrc(src, div8_en=False, ckout_en=False, port=PORT_DEFAULT, mcu=MC
 ###
 # Erase the MCU.
 #
-# @param[in] port Serial port to be used.
-# @param[in] mcu MCU model for AVRDUDE.
-# @param[out] True in case of success; otherwise False.
+# @param[in]    port            Serial port to be used.
+# @param[in]    mcu             MCU model for AVRDUDE.
+# @return       True in case of success; otherwise False.
 def mcu_erase(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
     # Check if the serial interface exists
     if not os.path.exists(port):
@@ -268,8 +268,7 @@ def mcu_erase(port=PORT_DEFAULT, mcu=MCU_DEFAULT):
 ###
 # Reset the MCU (via GPIO).
 #
-# @param[in] rst_pin GPIO pin for RST signal (BCM; default: 23).
-# @param[out] True in case of success; otherwise False.
+# @param[in]    rst_pin         GPIO pin for RST signal (BCM; default: 23).
 def mcu_reset(rst_pin=23):
     # Set RST to output
     GPIO.setup(rst_pin, GPIO.OUT)

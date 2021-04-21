@@ -17,8 +17,7 @@ from ETB.sens.JT103 import *
 from ETB.util.I2C_helper import *
 from ETB.util.MCU_AVR import *
 from ETB.util.FCNT import *
-### MISC ###
-GPIO.setwarnings(False)
+
 
 ####################
 
@@ -49,25 +48,45 @@ GPIO.setwarnings(False)
 # FCNT:             not available
 
 vsm = VSM()
+for i in range(4):
+    cnt = i
+    
+    vsm._mux.select(cnt+1)
+    vsm._mic[cnt].enable()
+    time.sleep(1)
+    vsm._mic[cnt].disable()
+    print(vsm._mic[cnt].read_register_status())   # (0, 0, 0, 0, 0)
+    print(vsm._mic[cnt].read_register_setting1()) # (1, 2)
+    print(vsm._mic[cnt].read_register_setting2()) # (0, 0, 0)
+    print(vsm._mic[cnt].read_register_vout())
+    print(vsm._mic[cnt].set_output_voltage(123))
+    print(vsm._mic[cnt].read_register_vout())
+    print(vsm._mic[cnt].is_enabled())
+    vsm._mic[cnt].enable()
+    time.sleep(0.5)
+    print(vsm._mic[cnt].is_enabled())
+    print()
 
-ina_aux1 = INA219(address=(0x41))
-ina_aux1.calibrate()
-ina_aux2 = INA219(address=(0x44))
-ina_aux2.calibrate()
-print("AUX1: %.2f V - %.2f mA" % (ina_aux1.get_bus_voltage_V(), ina_aux1.get_current_mA()))
-print("AUX2: %.2f V - %.2f mA" % (ina_aux2.get_bus_voltage_V(), ina_aux2.get_current_mA()))
+# GPIO #
+GPIO.cleanup()
 
-adc = ADS1115()
-print("AIN1: %d" % (adc.read_channel(channel=0)))
-print("AIN2: %d" % (adc.read_channel(channel=1)))
-print("AIN3: %d" % (adc.read_channel(channel=2)))
-print("AIN4: %d" % (adc.read_channel(channel=3)))
+exit(0)
 
-sens = DS18B20("/sys/bus/w1/devices/28-011927fdb603/w1_slave")
-print("Temperature: %.2f °C" % (sens.read_temperature()))
+vsm.ALL_disable()
+time.sleep(1)
+vsm.CH3_enable()
+for i in range(vsm.volt2dec(3.3)+1):
+    print("Set %.2f V" % (vsm.dec2volt(i)))
+    vsm.CH3_set_decimal_V(i)
+    print("  %.2f V -> %.2f mA" % (vsm.CH3_get_V(), vsm.CH3_get_mA()))
+time.sleep(1)
+vsm.ALL_disable()
 
-sens = LM75(0x49)
-print("Temperature: %.2f °C" % (sens.read_temperature()))
+# adc = ADS1115()
+# print("AIN1: %d" % (adc.read_channel(channel=0)))
+# print("AIN2: %d" % (adc.read_channel(channel=1)))
+# print("AIN3: %d" % (adc.read_channel(channel=2)))
+# print("AIN4: %d" % (adc.read_channel(channel=3)))
 
-sens = BME280()
-print("Temperature: %.2f °C" % (sens.read_temperature()))
+# GPIO #
+GPIO.cleanup()

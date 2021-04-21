@@ -14,6 +14,8 @@
 #
 # @example  ds18 = DS18B20('/sys/bus/w1/devices/28-011927fdb603/w1_slave')
 # @example  temp = ds18.read_temperature()    # Read the current temperature [°C]
+#
+# @todo     Either specify path or search for sensor under "/sys/bus/w1/devices/"
 #####
 
 

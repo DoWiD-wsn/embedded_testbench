@@ -31,9 +31,9 @@ class TCA9548A(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x70)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    address         Specific I2C address (default: 0x70)
+    # @param[in]    busnum          Specific I2C bus number (default: 1)
     def __init__(self, address=0x70, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -45,9 +45,9 @@ class TCA9548A(object):
     ###
     # Activate an output channel.
     #
-    # @param[in] self The object pointer.
-    # @param[in] channel I2C channel to be activated (1-8); value 0 deactivates all channels;
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    channel         I2C channel to be activated (1-8); value 0 deactivates all channels;
+    # @return       True in case of success; otherwise False.
     def select(self, channel):
         # Check if given channel is valid
         if (channel < 0) or (channel > 8):
@@ -67,8 +67,8 @@ class TCA9548A(object):
     ###
     # Read the current settings (8-bit).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Config byte value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Config byte value in case of success; otherwise False.
     def read(self):
         raw = 0
         try:
@@ -81,10 +81,13 @@ class TCA9548A(object):
     ###
     # Read the currently active channel(s).
     #
-    # @param[in] self The object pointer.
-    # @param[out] List of currently active channels in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       List of currently active channels in case of success; otherwise False.
     def get_channels(self):
         raw = self.read()
+        # Check return value
+        if raw is False:
+            return False
         channels = []
         if raw:
             if raw&0b00000001:

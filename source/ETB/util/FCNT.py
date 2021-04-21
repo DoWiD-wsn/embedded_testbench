@@ -71,9 +71,9 @@ class FCNT(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x24)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    address         specific I2C address (default: 0x24)
+    # @param[in]    busnum          specific I2C bus number (default: 1)
     def __init__(self, address=0x24, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -86,9 +86,9 @@ class FCNT(object):
     ###
     # Read an unsigned byte (8-bit) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[out] Unsigned byte value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @return       Unsigned byte value in case of success; otherwise False.
     def _i2c_read_U8(self, register):
         # Read value from the specified register
         return (self.__bus.read_byte_data(self.__i2c_address, register) & 0xFF)
@@ -97,10 +97,10 @@ class FCNT(object):
     ###
     # Write a byte (8-bit) to the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[in] value The byte value to be written.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @param[in]    value           The byte value to be written.
+    # @return       True in case of success; otherwise False.
     def _i2c_write_8(self, register, value):
         # Write the given value to the specified register
         self.__bus.write_byte_data(self.__i2c_address, register, (value&0xFF))
@@ -110,12 +110,12 @@ class FCNT(object):
     ###
     # Read the configuration register value flags.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Configuration register flags in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Configuration register flags in case of success; otherwise False.
     def read_config(self):
         # Read the status register
         ret = self._i2c_read_U8(FCNT_REG_CFG)
-        if not ret:
+        if ret is False:
             return False
         # Extract the flags
         RDY = (ret & FCNT_CFG_RDY_MASK) >> FCNT_CFG_RDY_OFFSET
@@ -129,80 +129,80 @@ class FCNT(object):
     ###
     # Read the ready flag.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Ready flag in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Ready flag in case of success; otherwise False.
     def get_ready_flag(self):
         # Read the configuration registers
         reg = self.read_config()
-        if(reg):
+        if ret is False:
+            return False
+        else:
             # Return the ready flag
             return reg[0]
-        else:
-            return False
 
 
     ###
     # Read the sampling configuration.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Sampling configuration in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Sampling configuration in case of success; otherwise False.
     def get_sampling(self):
         # Read the configuration registers
         reg = self.read_config()
-        if(reg):
+        if ret is False:
+            return False
+        else:
             # Return the sampling configuration
             return reg[1]
-        else:
-            return False
 
     ###
     # Read the resolution configuration.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Resolution configuration in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Resolution configuration in case of success; otherwise False.
     def get_resolution(self):
         # Read the configuration registers
         reg = self.read_config()
-        if(reg):
+        if ret is False:
+            return False
+        else:
             # Return the resolution configuration
             return reg[2]
-        else:
-            return False
 
 
     ###
     # Read the channel selection.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Channel selection in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Channel selection in case of success; otherwise False.
     def get_channel(self):
         # Read the configuration registers
         reg = self.read_config()
-        if(reg):
+        if ret is False:
+            return False
+        else:
             # Return the channel selection
             return reg[3]
-        else:
-            return False
 
 
     ###
     # Check if the ready flag is set.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def is_ready(self):
         ret = self.get_ready_flag()
-        if(ret):
-            return True
-        else:
+        if ret is False:
             return False
+        else:
+            return True
 
 
     ###
     # Read the LSB register value.
     #
-    # @param[in] self The object pointer.
-    # @param[out] LSB register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       LSB register value in case of success; otherwise False.
     def read_LSB(self):
         return self._i2c_read_U8(FCNT_REG_LSB)
 
@@ -210,8 +210,8 @@ class FCNT(object):
     ###
     # Read the MSB register value.
     #
-    # @param[in] self The object pointer.
-    # @param[out] MSB register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       MSB register value in case of success; otherwise False.
     def read_MSB(self):
         return self._i2c_read_U8(FCNT_REG_MSB)
 
@@ -219,8 +219,8 @@ class FCNT(object):
     ###
     # Read the XMSB register value.
     #
-    # @param[in] self The object pointer.
-    # @param[out] XMSB register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       XMSB register value in case of success; otherwise False.
     def read_XMSB(self):
         return self._i2c_read_U8(FCNT_REG_XMSB)
 
@@ -228,15 +228,15 @@ class FCNT(object):
     ###
     # Get the latest frequency reading.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Latest frequency reading in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Latest frequency reading in case of success; otherwise False.
     def get_frequency(self):
         # Check if measurement is ready
-        if not self.is_ready():
+        if self.is_ready() is False:
             return False
         # Get the current resolution
         res = self.get_resolution()
-        if not res:
+        if res is False:
             return False
         # Number of bytes to read depend on resolution
         lsb  = 0
@@ -257,9 +257,9 @@ class FCNT(object):
     ###
     # Set the input channel.
     #
-    # @param[in] self The object pointer.
-    # @param[in] ch The input channel to be used.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    ch              The input channel to be used.
+    # @return       True in case of success; otherwise False.
     def set_channel(self,ch):
         # Check the channel parameter
         if ch not in FCNT_CFG_SEL:
@@ -267,7 +267,7 @@ class FCNT(object):
         # Get current CFG register value
         ret = self._i2c_read_U8(FCNT_REG_CFG)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Get the new CFG register value
         value = (ret & FCNT_CFG_SEL_MASK) | (FCNT_CFG_SEL[ch]<<FCNT_CFG_SEL_OFFSET)
@@ -278,9 +278,9 @@ class FCNT(object):
     ###
     # Set the measurement resolution.
     #
-    # @param[in] self The object pointer.
-    # @param[in] res The measurement resolution to be used.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    res             The measurement resolution to be used.
+    # @return       True in case of success; otherwise False.
     def set_resolution(self,res):
         # Check the resolution parameter
         if res not in FCNT_CFG_RES:
@@ -288,7 +288,7 @@ class FCNT(object):
         # Read current CFG register value
         ret = self._i2c_read_U8(FCNT_REG_CFG)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Get the new CFG register value
         value = (ret & FCNT_CFG_RES_MASK) | (FCNT_CFG_RES[res]<<FCNT_CFG_RES_OFFSET)
@@ -299,9 +299,9 @@ class FCNT(object):
     ###
     # Set the sampling rate.
     #
-    # @param[in] self The object pointer.
-    # @param[in] smp The sampling rate to be used.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    smp             The sampling rate to be used.
+    # @return       True in case of success; otherwise False.
     def set_sampling(self,smp):
         # Check the sampling parameter
         if smp not in FCNT_CFG_SMP:
@@ -309,7 +309,7 @@ class FCNT(object):
         # Read current CFG register value
         ret = self._i2c_read_U8(FCNT_REG_CFG)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Get the new CFG register value
         value = (ret & FCNT_CFG_SMP_MASK) | (FCNT_CFG_SMP[smp]<<FCNT_CFG_SMP_OFFSET)
@@ -320,13 +320,13 @@ class FCNT(object):
     ###
     # Request a reset.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def reset(self):
         # Read current CFG register value
         ret = self._i2c_read_U8(FCNT_REG_CFG)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Get the new CFG register value
         value = (ret & FCNT_CFG_RST_MASK) | (1<<FCNT_CFG_RST_OFFSET)

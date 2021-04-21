@@ -92,10 +92,10 @@ class MIC24045(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] gpio GPIO pin for the enable signal (in BCM numbering)
-    # @param[in] address specific I2C address (default: 0x70)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    gpio            GPIO pin for the enable signal (in BCM numbering)
+    # @param[in]    address         Specific I2C address (default: 0x70)
+    # @param[in]    busnum          Specific I2C bus number (default: 1)
     def __init__(self, gpio, address=0x50, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -111,6 +111,7 @@ class MIC24045(object):
         GPIO.setup(self.__gpio, GPIO.OUT)
         # Initially, disable the MIC
         self.disable()
+        
         # Clear the fault flag
         self.clear_fault_flag()
         # Set the current limit to 3A (because of the INA219 limits)
@@ -128,7 +129,7 @@ class MIC24045(object):
     ###
     # Enable the MIC DC/DC converter.
     #
-    # @param[in] self The object pointer.
+    # @param[in]    self            The object pointer.
     def enable(self):
         # Set enable GPIO pin to HIGH
         GPIO.output(self.__gpio, GPIO.HIGH)
@@ -137,7 +138,7 @@ class MIC24045(object):
     ###
     # Disable the MIC DC/DC converter.
     #
-    # @param[in] self The object pointer.
+    # @param[in]    self            The object pointer.
     def disable(self):
         # Set enable GPIO pin to LOW
         GPIO.output(self.__gpio, GPIO.LOW)
@@ -146,9 +147,9 @@ class MIC24045(object):
     ###
     # Read an 8-bit I2C register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[out] 8-bit register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @return       8-bit register value in case of success; otherwise False.
     def read_register(self, register):
         # Try to read the given register
         try:
@@ -163,10 +164,10 @@ class MIC24045(object):
     
     # Write an 8-bit value to an I2C register of the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[in] value Register value to be written.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @param[in]    value           Register value to be written.
+    # @return       True in case of success; otherwise False.
     def write_register(self, register, value):
         # Try to write the given register
         try:
@@ -180,13 +181,13 @@ class MIC24045(object):
     ###
     # Read the status register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Status register flags in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Status register flags in case of success; otherwise False.
     def read_register_status(self):
         # Read the status register
         ret = self.read_register(MIC24045_REG_STATUS)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Extract the single flags
         OCF    = 1 if (ret & 0x80) else 0
@@ -201,13 +202,13 @@ class MIC24045(object):
     ###
     # Read the setting 1 register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Setting 1 register flags in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Setting 1 register flags in case of success; otherwise False.
     def read_register_setting1(self):
         # Read the setting 1 register
         ret = self.read_register(MIC24045_REG_SET1)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Extract the single flags
         ILIM    = (ret & 0xC0) >> 6
@@ -219,13 +220,13 @@ class MIC24045(object):
     ###
     # Read the setting 2 register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Setting 2 register flags in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Setting 2 register flags in case of success; otherwise False.
     def read_register_setting2(self):
         # Read the setting 2 register
         ret = self.read_register(MIC24045_REG_SET2)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Extract the single flags
         SUD     = (ret & 0x70) >> 4
@@ -238,8 +239,8 @@ class MIC24045(object):
     ###
     # Read the VOUT register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[out] VOUT register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       VOUT register value in case of success; otherwise False.
     def read_register_vout(self):
         # Read and return the VOUT register
         return self.read_register(MIC24045_REG_VOUT)
@@ -248,13 +249,13 @@ class MIC24045(object):
     ###
     # Read the command register value from the MIC.
     #
-    # @param[in] self The object pointer.
-    # @param[out] CIFF flag in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       CIFF flag in case of success; otherwise False.
     def read_register_command(self):
         # Read the Command register
         ret = self.read_register(MIC24045_REG_CMD)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Extract the flag
         CIFF   = 1 if (ret & 0x01) else 0
@@ -264,13 +265,13 @@ class MIC24045(object):
     ###
     # Check if the MIC is enabled (do not trust the GPIO pin ;) ).
     #
-    # @param[in] self The object pointer.
-    # @param[out] True if enabled; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True if enabled; otherwise False.
     def is_enabled(self):
         # Read the status register
         ret = self.read_register(MIC24045_REG_STATUS)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Check EnS flag
         if (ret & 0x08):
@@ -281,13 +282,13 @@ class MIC24045(object):
     ###
     # Check the power-good flag.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True if PGS is set; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True if PGS is set; otherwise False.
     def is_power_good(self):
         # Read the status register
         ret = self.read_register(MIC24045_REG_STATUS)
         # Check if reading was successful
-        if not ret:
+        if ret is False:
             return False
         # Check PGS flag
         if (ret & 0x01):
@@ -299,13 +300,13 @@ class MIC24045(object):
     ###
     # Clear the fault flags.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def clear_fault_flag(self):
         # Write CIFF to clear all fault flags
         ret = self.write_register(MIC24045_REG_CMD, 0x01)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         else:
             return True
@@ -314,9 +315,9 @@ class MIC24045(object):
     ###
     # Set the current limit.
     #
-    # @param[in] self The object pointer.
-    # @param[in] ilim ILIM register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    ilim            ILIM register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_current_limit(self,ilim):
         # Check given parameter
         if ilim not in MIC24045_ILIM:
@@ -324,7 +325,7 @@ class MIC24045(object):
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Prepare the correct register value
         msg = (ret & 0x3F) | (MIC24045_ILIM[ilim]<<MIC24045_ILIM_OFFSET)
@@ -335,9 +336,9 @@ class MIC24045(object):
     ###
     # Set the operating frequency.
     #
-    # @param[in] self The object pointer.
-    # @param[in] freq FREQ register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    freq            FREQ register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_frequency(self,freq):
         # Check given parameter
         if freq not in MIC24045_FREQ:
@@ -345,7 +346,7 @@ class MIC24045(object):
         # Read current SETTING 1 register value
         ret = self.read_register(MIC24045_REG_SET1)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Prepare the correct register value
         msg = (ret & 0xC7) | (MIC24045_FREQ[freq]<<MIC24045_FREQ_OFFSET)
@@ -356,9 +357,9 @@ class MIC24045(object):
     ###
     # Set the start-up delay.
     #
-    # @param[in] self The object pointer.
-    # @param[in] delay SUD register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    delay           SUD register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_startup_delay(self,delay):
         # Check given parameter
         if delay not in MIC24045_SUD:
@@ -366,7 +367,7 @@ class MIC24045(object):
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Prepare the correct register value
         msg = (ret & 0x8F) | (MIC24045_SUD[delay]<<MIC24045_SUD_OFFSET)
@@ -377,9 +378,9 @@ class MIC24045(object):
     ###
     # Set the voltage margins.
     #
-    # @param[in] self The object pointer.
-    # @param[in] margin MRG register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    margin          MRG register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_voltage_margins(self,margin):
         # Check given parameter
         if margin not in MIC24045_MRG:
@@ -387,7 +388,7 @@ class MIC24045(object):
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Prepare the correct register value
         msg = (ret & 0xF3) | (MIC24045_MRG[margin]<<MIC24045_MRG_OFFSET)
@@ -398,9 +399,9 @@ class MIC24045(object):
     ###
     # Set the soft-start slope.
     #
-    # @param[in] self The object pointer.
-    # @param[in] slope SS register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    slope           SS register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_soft_start_slope(self,slope):
         # Check given parameter
         if slope not in MIC24045_SS:
@@ -408,7 +409,7 @@ class MIC24045(object):
         # Read current SETTING 2 register value
         ret = self.read_register(MIC24045_REG_SET2)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Prepare the correct register value
         msg = (ret & 0xFC) | MIC24045_SS[slope]
@@ -419,9 +420,9 @@ class MIC24045(object):
     ###
     # Set the output voltage VOUT.
     #
-    # @param[in] self The object pointer.
-    # @param[in] value VOUT value.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    value           VOUT value.
+    # @return       True in case of success; otherwise False.
     def set_output_voltage(self,value):
         # Use only lower 8-bit (in case more is given)
         value = value & 0xFF
@@ -433,13 +434,13 @@ class MIC24045(object):
     ###
     # Increment the output voltage VOUT by one step (5/10/30/50 mV).
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def inc_output_voltage(self):
         # Read current VOUT register value
         ret = self.read_register(MIC24045_REG_VOUT)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Check if value can be incremented
         if ret<0xFF:
@@ -453,13 +454,13 @@ class MIC24045(object):
     ###
     # Decrement the output voltage VOUT by one step (5/10/30/50 mV).
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def dec_output_voltage(self):
         # Read current VOUT register value
         ret = self.read_register(MIC24045_REG_VOUT)
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Check if value can be decremented
         if ret>0x00:
@@ -473,13 +474,13 @@ class MIC24045(object):
     ###
     # Get the output voltage in volts (V).
     #
-    # @param[in] self The object pointer.
-    # @param[out] VOUT voltage in volts (V) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       VOUT voltage in volts (V) in case of success; otherwise False.
     def get_voltage_V(self):
         # Read the VOUT register value
         ret = self.read_register_vout()
         # Check return status
-        if not ret:
+        if ret is False:
             return False
         # Calculate the corresponding output voltage
         vout = 0
@@ -502,13 +503,13 @@ class MIC24045(object):
     ###
     # Get the output voltage in millivolts (mV).
     #
-    # @param[in] self The object pointer.
-    # @param[out] VOUT voltage in millivolts (mV) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       VOUT voltage in millivolts (mV) in case of success; otherwise False.
     def get_voltage_mV(self):
         # Get the voltage in volts
         vout = self.get_voltage_V()
         # Check return status
-        if not vout:
+        if vout is False:
             return False
         else:
             # Convert V to mV
@@ -518,8 +519,8 @@ class MIC24045(object):
     ###
     # Convert a decimal register value to an actual voltage in volts (V).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Corresponding voltage in volts (V); otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Corresponding voltage in volts (V); otherwise False.
     def get_voltage_from_register(self,reg):
         # Check given register value
         if (reg<0) or (reg>0xFF):
@@ -545,8 +546,8 @@ class MIC24045(object):
     ###
     # Convert a voltage in volts to an actual decimal register value.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Corresponding decimal register value; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Corresponding decimal register value; otherwise False.
     def get_register_from_voltage(self,vout):
         reg = 0
         if vout<0.64:

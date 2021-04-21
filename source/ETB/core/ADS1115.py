@@ -109,9 +109,9 @@ class ADS1115(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x48)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    address         Specific I2C address (default: 0x48)
+    # @param[in]    busnum          Specific I2C bus number (default: 1)
     def __init__(self, address=0x48, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -124,9 +124,9 @@ class ADS1115(object):
     ###
     # Read a 16-bit I2C register value from the ADS (raw).
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[out] List of bytes in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @return       List of bytes in case of success; otherwise False.
     def read_register_raw(self, register):
         return self.__bus.read_i2c_block_data(self.__i2c_address, register) 
 
@@ -134,12 +134,15 @@ class ADS1115(object):
     ###
     # Read a 16-bit I2C register value from the ADS.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[out] 16-bit register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @return       16-bit register value in case of success; otherwise False.
     def read_register(self, register):
         buf = []
         buf = self.read_register_raw(register)
+        # Check return value
+        if buf is False:
+            return False
         # Convert to 16-bit signed value.
         value = (buf[0]<< 8) | buf[1]
         # Check for sign bit and turn into a negative value if set.
@@ -150,21 +153,22 @@ class ADS1115(object):
 
     # Write a 16-bit value to an I2C register of the ADS.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[in] value Register value to be written.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @param[in]    value           Register value to be written.
+    # @return       True in case of success; otherwise False.
     def write_register(self, register, value):
-        self.__bus.write_i2c_block_data(self.__i2c_address, register, [(value & 0xFF00) >> 8, value & 0x00FF])
+        return self.__bus.write_i2c_block_data(self.__i2c_address, register, [(value & 0xFF00) >> 8, value & 0x00FF])
 
 
     ###
     # Read a single ADC channel and return signed integer result.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x48)
-    # @param[in] busnum specific I2C bus number (default: 1)
-    # @param[out] Signed conversion value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    channel         ADC channel to be queried
+    # @param[in]    gain            Gain to be used
+    # @param[in]    data_rate       Data rate to be used
+    # @return       Signed conversion value in case of success; otherwise False.
     def read_channel(self, channel, gain=1, data_rate=ADS1115_DR_DEFAULT):
         # Set the mode to single shot
         config = ADS1115_MODE_SINGLE
@@ -185,7 +189,10 @@ class ADS1115(object):
         # Disable comparator mode
         config |= ADS1115_COMP_QUE_DEFAULT
         # Write configuration value to the ADS
-        self.write_register(ADS1115_REG_CONVERSION,config)
+        ret = self.write_register(ADS1115_REG_CONVERSION,config)
+        # Check return value
+        if ret is False:
+            return False
         # Wait for the ADC sample to finish
         time.sleep(1.0/data_rate+0.0001)
         # Get the result from the ADS

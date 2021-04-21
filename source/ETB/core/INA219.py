@@ -94,9 +94,9 @@ class INA219(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x40)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    address         Specific I2C address (default: 0x40)
+    # @param[in]    busnum          Specific I2C bus number (default: 1)
     def __init__(self, address=0x40, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -118,8 +118,8 @@ class INA219(object):
     ###
     # Calibrate for max 16V 400mA measurements.
     #
-    # @param[in] self The object pointer.
-    # @param[in] imax Maximum current (default: 400mA)
+    # @param[in]    self            The object pointer.
+    # @param[in]    imax            Maximum current (default: 400mA)
     def calibrate(self,imax=INA219_CAL_400MA):
         # Calibrate the INA accordingly
         if imax==INA219_CAL_400MA:
@@ -132,7 +132,7 @@ class INA219(object):
     ###
     # Calibrate for max 16V 400mA measurements.
     #
-    # @param[in] self The object pointer.
+    # @param[in]    self            The object pointer.
     def _calibrate_16V_400mA(self):
         # Current LSB = 50uA per bit
         self._current_lsb = 0.05
@@ -152,7 +152,7 @@ class INA219(object):
     ###
     # Calibrate for max 16V 5A measurements.
     #
-    # @param[in] self The object pointer.
+    # @param[in]    self            The object pointer.
     def _calibrate_16V_5A(self):
         ## Current LSB = 152.4uA per bit
         self._current_lsb = 0.1524
@@ -172,9 +172,9 @@ class INA219(object):
     ###
     # Read a 16-bit I2C register value from the INA (raw).
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[out] List of bytes in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @return       List of bytes in case of success; otherwise False.
     def read_register_raw(self, register):
         return self.__bus.read_i2c_block_data(self.__i2c_address, register) 
 
@@ -182,9 +182,9 @@ class INA219(object):
     ###
     # Read a 16-bit I2C register value from the INA.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[out] 16-bit register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @return       16-bit register value in case of success; otherwise False.
     def read_ina_register(self, register):
         buf = []
         buf = self.read_register_raw(register)
@@ -198,18 +198,18 @@ class INA219(object):
 
     # Write a 16-bit value to an I2C register of the INA.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register Register address.
-    # @param[in] value Register value to be written.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        Register address.
+    # @param[in]    value           Register value to be written.
+    # @return       True in case of success; otherwise False.
     def write_register(self, register, value):
         self.__bus.write_i2c_block_data(self.__i2c_address, register, [(value & 0xFF00) >> 8, value & 0x00FF])
 
 
     # Request a reset of the INA.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def reset(self):
         # Set the RST bit in the configuration register
         self.write_register(INA219_REG_CONFIG, INA219_RST)
@@ -218,8 +218,8 @@ class INA219(object):
     ###
     # Read the bus voltage in volts (V).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Bus voltage in volts (V) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Bus voltage in volts (V) in case of success; otherwise False.
     def get_bus_voltage_V(self):
         return float(self.read_ina_register(INA219_REG_VBUS) >> 1) * 0.001
 
@@ -227,8 +227,8 @@ class INA219(object):
     ###
     # Read the shunt voltage in volts (V).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Shunt voltage in volts (V) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Shunt voltage in volts (V) in case of success; otherwise False.
     def get_shunt_voltage_V(self):
         return float(self.read_ina_register(INA219_REG_VSHUNT)) * 0.001
 
@@ -236,8 +236,8 @@ class INA219(object):
     ###
     # Read the current in milliamps (mA).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Calibrated current in milliamps (mA) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Calibrated current in milliamps (mA) in case of success; otherwise False.
     def get_current_mA(self):
         return float(self.read_ina_register(INA219_REG_CURRENT)) * self._current_lsb
 
@@ -245,8 +245,8 @@ class INA219(object):
     ###
     # Read the power register in watts (W).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Calibrated power in watts (W) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Calibrated power in watts (W) in case of success; otherwise False.
     def get_power_W(self):
         return float(self.read_ina_register(INA219_REG_POWER)) * self._power_lsb
 
@@ -254,8 +254,8 @@ class INA219(object):
     ###
     # Read the power register in milliwatts (mW).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Calibrated power in milliwatts (mW) in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Calibrated power in milliwatts (mW) in case of success; otherwise False.
     def get_power_mW(self):
         return float(self.read_ina_register(INA219_REG_POWER)) * (self._power_lsb*1000)
 
@@ -263,9 +263,9 @@ class INA219(object):
     ###
     # Set the calibration register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] value Calibration register value.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    value           Calibration register value.
+    # @return       True in case of success; otherwise False.
     def set_cal_register(self, value):
         self.write_register(INA219_REG_CALIBRATION, value)
 
@@ -273,9 +273,9 @@ class INA219(object):
     ###
     # Set the bus voltage range (BRNG).
     #
-    # @param[in] self The object pointer.
-    # @param[in] brng BRNG register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    brng            BRNG register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_bus_RNG(self, brng):
         # Check the given value
         if brng not in INA219_BRNG:
@@ -291,9 +291,9 @@ class INA219(object):
     ###
     # Set the shunt voltage PGA gain and range (PG).
     #
-    # @param[in] self The object pointer.
-    # @param[in] pg PG register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    pg              PG register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_PGA(self, pg):
         # Check the given value
         if pg not in INA219_PG:
@@ -309,10 +309,10 @@ class INA219(object):
     ###
     # Set the Bus ADC Resolution/Averaging (BADC).
     #
-    # @param[in] self The object pointer.
-    # @param[in] resolution ADC resolution register value (use pre-defined values!).
-    # @param[in] averaging ADC averaging register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    resolution      ADC resolution register value (use pre-defined values!).
+    # @param[in]    averaging       ADC averaging register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_bus_ADC(self, bits, sample):
         # Check the given values
         if bits not in INA219_ADC_BITS:
@@ -336,10 +336,10 @@ class INA219(object):
     ###
     # Set the Shunt ADC Resolution/Averaging (SADC).
     #
-    # @param[in] self The object pointer.
-    # @param[in] resolution ADC resolution register value (use pre-defined values!).
-    # @param[in] averaging ADC averaging register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    resolution      ADC resolution register value (use pre-defined values!).
+    # @param[in]    averaging       ADC averaging register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_shunt_ADC(self, bits, sample):
         # Check the given values
         if bits not in INA219_ADC_BITS:
@@ -363,9 +363,9 @@ class INA219(object):
     ###
     # Set the operating mode (MODE).
     #
-    # @param[in] self The object pointer.
-    # @param[in] mode MODE register value (use pre-defined values!).
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    mode            MODE register value (use pre-defined values!).
+    # @return       True in case of success; otherwise False.
     def set_mode(self, mode):
         # Check the given value
         if (mode<INA219_MODE_PDOWN) or (mode>INA219_MODE_SB_CONT):

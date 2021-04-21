@@ -130,9 +130,9 @@ class BME280(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] address specific I2C address (default: 0x76)
-    # @param[in] busnum specific I2C bus number (default: 1)
+    # @param[in]    self        The object pointer.
+    # @param[in]    address     Specific I2C address (default: 0x76)
+    # @param[in]    busnum      Specific I2C bus number (default: 1)
     def __init__(self, address=0x76, busnum=1):
         # @var __i2c_address
         # Object's own I2C address
@@ -165,21 +165,21 @@ class BME280(object):
     ###
     # Write a byte (8-bit) to the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[in] value The byte value to be written.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @param[in]    value           The byte value to be written.
+    # @return       True in case of success; otherwise False.
     def _i2c_write_8(self, register, value):
         # Write the given value to the specified register
-        self.__bus.write_byte_data(self.__i2c_address, register, (value&0xFF))
+        return self.__bus.write_byte_data(self.__i2c_address, register, (value&0xFF))
 
 
     ###
     # Read an unsigned byte (8-bit) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[out] Unsigned byte value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @return       True in case of success; otherwise False.
     def _i2c_read_U8(self, register):
         # Read value from the specified register
         return (self.__bus.read_byte_data(self.__i2c_address, register) & 0xFF)
@@ -188,12 +188,15 @@ class BME280(object):
     ###
     # Read a signed byte (8-bit) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[out] Signed byte value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @return       Signed byte value in case of success; otherwise False.
     def _i2c_read_S8(self, register):
         # First, read value as unsigned byte
         result = self._i2c_read_U8(register)
+        # Check return value
+        if result is False:
+            return False
         # Check for sign bit and turn into a negative value if set.
         if result & 0x80 != 0:
             result -= 1 << 8
@@ -203,15 +206,18 @@ class BME280(object):
     ###
     # Read an unsigned word (16-bit) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[in] little_endian Endianess of the value (true if little)
-    # @param[out] Unsigned word value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @param[in]    little_endian   Endianess of the value (true if little)
+    # @return       Unsigned word value in case of success; otherwise False.
     def _i2c_read_U16(self, register, little_endian=True):
         # Read word value from the I2C register
         result = self.__bus.read_word_data(self.__i2c_address,register) & 0xFFFF
+        # Check return value
+        if result is False:
+            return False
         # Swap bytes if using big endian
-        if not little_endian:
+        if little_endian is False:
             result = ((result << 8) & 0xFF00) + (result >> 8)
         return result
 
@@ -219,9 +225,9 @@ class BME280(object):
     ###
     # Read an unsigned word (16-bit; little endian) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[out] Unsigned word value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @return       Unsigned word value in case of success; otherwise False.
     def _i2c_read_U16LE(self, register):
         return self._i2c_read_U16(register, little_endian=True)
 
@@ -229,13 +235,16 @@ class BME280(object):
     ###
     # Read a signed word (16-bit) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[in] little_endian Endianess of the value (true if little)
-    # @param[out] Signed word value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @param[in]    little_endian   Endianess of the value (true if little)
+    # @return       Signed word value in case of success; otherwise False.
     def _i2c_read_S16(self, register, little_endian=True):
         # First, read the value as unsigned word
         result = self._i2c_read_U16(register, little_endian)
+        # Check return value
+        if result is False:
+            return False
         # Check for sign bit and turn into a negative value if set.
         if result & 0x8000 != 0:
             result -= 1 << 16
@@ -245,9 +254,9 @@ class BME280(object):
     ###
     # Read a signed word (16-bit; little endian) from the specified I2C register.
     #
-    # @param[in] self The object pointer.
-    # @param[in] register The I2C register address.
-    # @param[out] Signed word value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    register        The I2C register address.
+    # @return       Signed word value in case of success; otherwise False.
     def _i2c_read_S16LE(self, register):
         return self._i2c_read_S16(register, little_endian=True)
 
@@ -255,8 +264,8 @@ class BME280(object):
     ###
     # Read the chip ID.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Chip ID in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Chip ID in case of success; otherwise False.
     def get_chipid(self):
         return self._i2c_read_U8(BME280_REG_CHIPID)
 
@@ -264,8 +273,8 @@ class BME280(object):
     ###
     # Read the humidity control register.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Humidity control register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Humidity control register value in case of success; otherwise False.
     def get_ctrl_hum(self):
         return self._i2c_read_U8(BME280_REG_CTRL_HUM)
 
@@ -273,16 +282,16 @@ class BME280(object):
     ###
     # Read the status register.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Status register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Status register value in case of success; otherwise False.
     def get_status(self):
         return self._i2c_read_U8(BME280_REG_STATUS)
 
     ###
     # Read the measurement control register.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Measurement control register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Measurement control register value in case of success; otherwise False.
     def get_ctrl_meas(self):
         return self._i2c_read_U8(BME280_REG_CTRL_MEAS)
 
@@ -290,8 +299,8 @@ class BME280(object):
     ###
     # Read the configuration register.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Configuration register value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Configuration register value in case of success; otherwise False.
     def get_config(self):
         return self._i2c_read_U8(BME280_REG_CONFIG)
 
@@ -299,153 +308,176 @@ class BME280(object):
     ###
     # Request a sensor reset.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def reset(self):
-        self._i2c_write_8(BME280_REG_RESET, BME280_RESET_VALUE)
+        return self._i2c_write_8(BME280_REG_RESET, BME280_RESET_VALUE)
 
 
     ###
     # Set the sensor's mode of operation.
     #
-    # @param[in] self The object pointer.
-    # @param[in] mode Mode of operation.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    mode            Mode of operation.
+    # @return       True in case of success; otherwise False.
     def set_mode(self, mode):
         # Check the given value
         if (mode<BME280_MODE_SLEEP) or (mode>BME280_MODE_NORMAL):
             return False
         # Get the current register value
         reg = self.get_ctrl_meas()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_MODE_MASK) | (mode<<BME280_MODE_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
+        return self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
 
 
     ###
     # Set the temperature sampling mode.
     #
-    # @param[in] self The object pointer.
-    # @param[in] sample Temperature sampling mode.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    sample          Temperature sampling mode.
+    # @return       True in case of success; otherwise False.
     def set_t_sample(self, sample):
         # Check given parameter
         if sample not in BME280_OSRS:
             raise ValueError('Valid OSRS values are: 0, 1, 2, 4, 8, 16')
         # Get the current register value
         reg = self.get_ctrl_meas()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_OSRS_T_MASK) | (BME280_OSRS[sample]<<BME280_OSRS_T_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
+        return self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
 
 
     ###
     # Set the pressure sampling mode.
     #
-    # @param[in] self The object pointer.
-    # @param[in] sample Pressure sampling mode.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    sample          Pressure sampling mode.
+    # @return       True in case of success; otherwise False.
     def set_p_sample(self, sample):
         # Check given parameter
         if sample not in BME280_OSRS:
             raise ValueError('Valid OSRS values are: 0, 1, 2, 4, 8, 16')
         # Get the current register value
         reg = self.get_ctrl_meas()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_OSRS_P_MASK) | (BME280_OSRS[sample]<<BME280_OSRS_P_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
+        return self._i2c_write_8(BME280_REG_CTRL_MEAS, reg)
 
 
     ###
     # Set the humidity sampling mode.
     #
-    # @param[in] self The object pointer.
-    # @param[in] sample Humidity sampling mode.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    sample          Humidity sampling mode.
+    # @return       True in case of success; otherwise False.
     def set_h_sample(self, sample):
         # Check given parameter
         if sample not in BME280_OSRS:
             raise ValueError('Valid OSRS values are: 0, 1, 2, 4, 8, 16')
         # Get the current register value
         reg = self.get_ctrl_hum()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_OSRS_H_MASK) | (BME280_OSRS[sample]<<BME280_OSRS_H_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CTRL_HUM, reg)
+        return self._i2c_write_8(BME280_REG_CTRL_HUM, reg)
 
 
     ###
     # Set the standby mode.
     #
-    # @param[in] self The object pointer.
-    # @param[in] stby Standby mode.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    stby            Standby mode.
+    # @return       True in case of success; otherwise False.
     def set_standby(self, stby):
         # Check given parameter
         if stby not in BME280_T_SB:
             raise ValueError('Valid T_SB values are: 0.5, 10, 20, 62.5, 125, 250, 500, 1000')
         # Get the current register value
         reg = self.get_config()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_T_SB_MASK) | (BME280_T_SB[stby]<<BME280_T_SB_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CONFIG, reg)
+        return self._i2c_write_8(BME280_REG_CONFIG, reg)
 
 
     ###
     # Set the filter mode.
     #
-    # @param[in] self The object pointer.
-    # @param[in] filter_m Filter mode.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    filter_m        Filter mode.
+    # @return       True in case of success; otherwise False.
     def set_filter(self, filter_m):
         # Check given parameter
         if filter_m not in BME280_FILTER:
             raise ValueError('Valid filter values are: 0 (off), 2, 4, 8, 16')
         # Get the current register value
         reg = self.get_config()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_FILTER_MASK) | (BME280_FILTER[filter_m]<<BME280_FILTER_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CONFIG, reg)
+        return self._i2c_write_8(BME280_REG_CONFIG, reg)
 
 
     ###
     # Enable the 3-wire SPI interface.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def spi_enable(self):
         # Get the current register value
         reg = self.get_config()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_SPI2W_EN_MASK) | (BME280_SPI2W_EN_ON<<BME280_SPI2W_EN_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CONFIG, reg)
+        return self._i2c_write_8(BME280_REG_CONFIG, reg)
 
 
     ###
     # Disable the 3-wire SPI interface.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       True in case of success; otherwise False.
     def spi_disable(self):
         # Get the current register value
         reg = self.get_config()
+        # Check return value
+        if reg is False:
+            return False
         # Prepare new register value
         reg = (reg & BME280_SPI2W_EN_MASK) | (BME280_SPI2W_EN_OFF<<BME280_SPI2W_EN_OFFSET)
         # Write the new value to the sensor
-        self._i2c_write_8(BME280_REG_CONFIG, reg)
+        return self._i2c_write_8(BME280_REG_CONFIG, reg)
 
 
     ###
     # Load the calibration values stored on the sensor.
     #
-    # @param[in] self The object pointer.
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
     def _load_calibration(self):
         # temperature
         self.dig_T1 = self._i2c_read_U16LE(BME280_REG_DIG_T1)
@@ -473,9 +505,9 @@ class BME280(object):
     ###
     # Check if the sensor readings are ready.
     #
-    # @param[in] self The object pointer.
-    # @param[in] timeout Timeout for waiting [ms].
-    # @param[out] True in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    timeout         Timeout for waiting [ms].
+    # @return       True in case of success; otherwise False.
     def wait_for_ready(self, timeout=500):
         # Time-passed counter
         passed = 0
@@ -495,34 +527,40 @@ class BME280(object):
     ###
     # Read the raw (uncompensated) temperature value.
     #
-    # @param[in] self The object pointer.
-    # @param[in] timeout Timeout for waiting [ms].
-    # @param[out] Raw temperature value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    timeout         Timeout for waiting [ms].
+    # @return       Raw temperature value in case of success; otherwise False.
     def _get_raw_temperature(self, timeout=500):
         # Check if the sensor readings are ready
-        if not self.wait_for_ready(timeout):
+        if self.wait_for_ready(timeout) is False:
             return False
         # Read the temperature bytes
         msb = self._i2c_read_U8(BME280_REG_T_MSB)
         lsb = self._i2c_read_U8(BME280_REG_T_LSB)
         xlsb = self._i2c_read_U8(BME280_REG_T_XLSB)
+        # Check return values
+        if (msb is False) or (lsb is False) or (xlsb is False):
+            return False
         # Return the raw temperature value
         return (((msb << 16) | (lsb << 8) | xlsb) >> 4)
 
     ###
     # Read the raw (uncompensated) pressure value.
     #
-    # @param[in] self The object pointer.
-    # @param[in] timeout Timeout for waiting [ms].
-    # @param[out] Raw pressure value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    timeout         Timeout for waiting [ms].
+    # @return       Raw pressure value in case of success; otherwise False.
     def _get_raw_pressure(self):
         # Check if the sensor readings are ready
-        if not self.wait_for_ready(timeout):
+        if self.wait_for_ready(timeout) is False:
             return False
         # Read the pressure bytes
         msb = self._i2c_read_U8(BME280_REG_P_MSB)
         lsb = self._i2c_read_U8(BME280_REG_P_LSB)
         xlsb = self._i2c_read_U8(BME280_REG_P_XLSB)
+        # Check return values
+        if (msb is False) or (lsb is False) or (xlsb is False):
+            return False
         # Return the raw pressure value
         return (((msb << 16) | (lsb << 8) | xlsb) >> 4)
 
@@ -530,16 +568,19 @@ class BME280(object):
     ###
     # Read the raw (uncompensated) humidity value.
     #
-    # @param[in] self The object pointer.
-    # @param[in] timeout Timeout for waiting [ms].
-    # @param[out] Raw humidity value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[in]    timeout         Timeout for waiting [ms].
+    # @return       Raw humidity value in case of success; otherwise False.
     def _get_raw_humidity(self):
         # Check if the sensor readings are ready
-        if not self.wait_for_ready(timeout):
+        if self.wait_for_ready(timeout) is False:
             return False
         # Read the humidity bytes
         msb = self._i2c_read_U8(BME280_REG_H_MSB)
         lsb = self._i2c_read_U8(BME280_REG_H_LSB)
+        # Check return values
+        if (msb is False) or (lsb is False):
+            return False
         # Return the raw humidity value
         return ((msb << 8) | lsb)
 
@@ -547,11 +588,14 @@ class BME280(object):
     ###
     # Read the compensated temperature value (degree Celsius).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Temperature value [°C] in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Temperature value [°C] in case of success; otherwise False.
     def read_temperature(self):
         # Get the raw temperature reading
         raw = self._get_raw_temperature()
+        # Check return value
+        if raw is False:
+            return False
         # Calculate the compensated temperature value (see datasheet 8.2)
         var1 = ((((raw>>3) - (self.dig_T1<<1))) * (self.dig_T2)) >> 11
         var2 = (((((raw>>4) - (self.dig_T1)) * ((raw>>4) - (self.dig_T1))) >> 12) * (self.dig_T3)) >> 14
@@ -564,11 +608,14 @@ class BME280(object):
     ###
     # Read the compensated pressure value (hectopascal).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Pressure value [hPa] in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Pressure value [hPa] in case of success; otherwise False.
     def read_pressure(self):
         # Get the raw temperature reading
         raw = self._get_raw_pressure()
+        # Check return value
+        if raw is False:
+            return False
         # Check if the fine resolution temperature value is not set yet
         if (self.__t_fine==0.0):
             # Perform temperature measurement to update the __t_fine value
@@ -597,11 +644,14 @@ class BME280(object):
     ###
     # Read the compensated humidity value (% RH).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Humidity value [% RH] in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Humidity value [% RH] in case of success; otherwise False.
     def read_humidity(self):
         # Get the raw humidity reading
         raw = self._get_raw_humidity()
+        # Check return value
+        if raw is False:
+            return False
         # Check if the fine resolution temperature value is not set yet
         if (self.__t_fine==0.0):
             # Perform temperature measurement to update the __t_fine value
@@ -622,12 +672,15 @@ class BME280(object):
     ###
     # Calculate the dewpoint in °C (only accurate at >50% RH).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Dewpoint value [°C] in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @return       Dewpoint value [°C] in case of success; otherwise False.
     def read_dewpoint(self):
         # Read temperature value
         celsius = self.get_temperature()
         # Read humidity value
         humidity = self.get_humidity()
+        # Check return value
+        if (celsius is False) or (humidity is False):
+            return False
         # Return the dew-point
         return (celsius - ((100 - humidity) / 5))

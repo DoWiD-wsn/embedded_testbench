@@ -87,7 +87,7 @@ class LM75(object):
         # Read word value from the I2C register
         result = self.__bus.read_word_data(self.__i2c_address,register) & 0xFFFF
         # Swap bytes if using big endian
-        if not little_endian:
+        if little_endian is False:
             result = ((result << 8) & 0xFF00) + (result >> 8)
         return result
 
@@ -140,7 +140,7 @@ class LM75(object):
     # @param[out] True in case of success; otherwise False.
     def _i2c_write_16(self, register, value, little_endian=True):
         # Swap bytes if using big endian
-        if not little_endian:
+        if little_endian is False:
             value = ((value << 8) & 0xFF00) + (value >> 8)
         # Write the given value to the specified register
         self.__bus.write_word_data(self.__i2c_address, register, value)
@@ -174,7 +174,7 @@ class LM75(object):
     def get_config_flags(self):
         # Read the config register
         ret = self.get_config()
-        if not ret:
+        if ret is False:
             return False
         # Extract the single flags
         SHUTDOWN = 1 if(ret & (1 << LM75_CONF_SHDN_OFFSET)) else 0

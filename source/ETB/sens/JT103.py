@@ -86,9 +86,6 @@ class JT103(object):
     def read_temperature(self):
         # Read the raw ADC value
         data = self._get_raw_value()
-        
-        print("DBG: data = %d" % (data))
-        
         # Check if the ADC returned a valid conversion result
         if data:
             # Calculate the thermistor's resistance

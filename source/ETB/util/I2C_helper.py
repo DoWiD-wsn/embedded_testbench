@@ -27,10 +27,10 @@ import smbus
 ###
 # Scan the I2C bus for available devices.
 #
-# @param[in] start Start address for scan (default: 0x00).
-# @param[in] end End address for scan (default: 0x78).
-# @param[in] busnum Specific I2C bus number (default: 1)
-# @param[out] List of available devices (addresses).
+# @param[in]    start           Start address for scan (default: 0x00).
+# @param[in]    end             End address for scan (default: 0x78).
+# @param[in]    busnum          Specific I2C bus number (default: 1)
+# return        List of available devices (addresses).
 def I2C_scan(start=0x00, end=0x78, busnum=1):
     # Try to open the I2C bus
     try:
@@ -58,9 +58,9 @@ def I2C_scan(start=0x00, end=0x78, busnum=1):
 ###
 # Check if device at given address is available.
 #
-# @param[in] address Address to be checked.
-# @param[in] busnum Specific I2C bus number (default: 1)
-# @param[out] True in case of success; otherwise False.
+# @param[in]    address         Address to be checked.
+# @param[in]    busnum          Specific I2C bus number (default: 1)
+# @return       True in case of success; otherwise False.
 def I2C_is_available(address, busnum=1):
     # Try to open the I2C bus
     try:
