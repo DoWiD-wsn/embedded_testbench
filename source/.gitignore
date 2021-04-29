@@ -13,3 +13,6 @@ instance/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# ETB-specific stuff
+results/
