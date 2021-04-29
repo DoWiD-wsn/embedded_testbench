@@ -50,10 +50,10 @@ class JT103(object):
     ###
     # The constructor.
     #
-    # @param[in] self The object pointer.
-    # @param[in] channel ADC input channel (default: channel 0)
-    # @param[in] address Specific I2C address (default: 0x48)
-    # @param[in] busnum Specific I2C bus number (default: 1)
+    # @param[in]    self            The object pointer.
+    # @param[in]    channel         ADC input channel (default: channel 0)
+    # @param[in]    address         Specific I2C address (default: 0x48)
+    # @param[in]    busnum          Specific I2C bus number (default: 1)
     def __init__(self, channel=0, address=0x48, busnum=1):
         # @var __i2c_address
         # Object's ADC I2C address
@@ -72,27 +72,38 @@ class JT103(object):
     ###
     # Read the raw ADC value.
     #
-    # @param[in] self The object pointer.
-    # @param[out] Raw ADC value in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[out]   Raw ADC value in case of success; otherwise False.
     def _get_raw_value(self):
         return self.__adc.read_channel(channel=self.__channel)
 
 
     ###
+    # Convert ADC reading to temperature in degrees Celsius (°C)
+    #
+    # @param[in]    self            The object pointer.
+    # @param[in]    raw             Raw ADC value.
+    # @param[out]   Temperature value [°C] in case of success; otherwise False.
+    def raw_to_degree(self, raw):
+        # Calculate the thermistor's resistance
+        R_thermistor = JT103_R_BALANCE / ((JT103_MAX_ADC_CORRECT / float(raw)) - 1.0)
+        # Use the beta equation to get the temperature
+        T_thermistor = ((JT103_BETA * JT103_TEMP_ROOM) / (JT103_BETA + (JT103_TEMP_ROOM * log(R_thermistor/JT103_R_ROOM)))) - JT103_TEMP_K2C
+        # Return the temperature (in degree Celsius)
+        return float(T_thermistor)
+
+
+    ###
     # Read the resulting temperature value (degree Celsius).
     #
-    # @param[in] self The object pointer.
-    # @param[out] Temperature value [°C] in case of success; otherwise False.
+    # @param[in]    self            The object pointer.
+    # @param[out]   Temperature value [°C] in case of success; otherwise False.
     def read_temperature(self):
         # Read the raw ADC value
         data = self._get_raw_value()
         # Check if the ADC returned a valid conversion result
-        if data:
-            # Calculate the thermistor's resistance
-            R_thermistor = JT103_R_BALANCE / ((JT103_MAX_ADC_CORRECT / float(data)) - 1.0)
-            # Use the beta equation to get the temperature
-            T_thermistor = ((JT103_BETA * JT103_TEMP_ROOM) / (JT103_BETA + (JT103_TEMP_ROOM * log(R_thermistor/JT103_R_ROOM)))) - JT103_TEMP_K2C
+        if data is not False:
             # Return the temperature (in degree Celsius)
-            return float(T_thermistor)
+            return self.raw_to_degree(data)
         else:
             return False

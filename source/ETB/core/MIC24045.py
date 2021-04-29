@@ -25,6 +25,8 @@ import smbus
 import RPi.GPIO as GPIO
 # for GPIO numbering, choose BCM mode
 GPIO.setmode(GPIO.BCM)
+# Disable GPIO in-use warnings
+GPIO.setwarnings(False)
 
 
 ##### GLOBAL VARIABLES #####
