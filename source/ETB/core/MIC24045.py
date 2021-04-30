@@ -277,9 +277,9 @@ class MIC24045(object):
             return False
         # Check EnS flag
         if (ret & 0x08):
-            return True
+            return 1
         else:
-            return False
+            return 0
 
     ###
     # Check the power-good flag.
@@ -294,9 +294,9 @@ class MIC24045(object):
             return False
         # Check PGS flag
         if (ret & 0x01):
-            return True
+            return 1
         else:
-            return False
+            return 0
 
 
     ###

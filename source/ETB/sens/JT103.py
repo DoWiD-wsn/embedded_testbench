@@ -41,6 +41,21 @@ JT103_VSS_MAX           = 5.22      # RPi gives ~5.22V instead of 5V
 JT103_MAX_ADC_CORRECT   = JT103_MAX_ADC * (JT103_VSS_MAX / JT103_GAIN_MAX)
 
 
+###
+# Convert ADC reading to temperature in degrees Celsius (°C)
+#
+# @param[in]    self            The object pointer.
+# @param[in]    raw             Raw ADC value.
+# @param[out]   Temperature value [°C] in case of success; otherwise False.
+def raw_to_degree(raw):
+    # Calculate the thermistor's resistance
+    R_thermistor = JT103_R_BALANCE / ((JT103_MAX_ADC_CORRECT / float(raw)) - 1.0)
+    # Use the beta equation to get the temperature
+    T_thermistor = ((JT103_BETA * JT103_TEMP_ROOM) / (JT103_BETA + (JT103_TEMP_ROOM * log(R_thermistor/JT103_R_ROOM)))) - JT103_TEMP_K2C
+    # Return the temperature (in degree Celsius)
+    return round(float(T_thermistor),3)
+
+
 #####
 # @class    JT103
 # @brief    JT103 thermistor
@@ -79,21 +94,6 @@ class JT103(object):
 
 
     ###
-    # Convert ADC reading to temperature in degrees Celsius (°C)
-    #
-    # @param[in]    self            The object pointer.
-    # @param[in]    raw             Raw ADC value.
-    # @param[out]   Temperature value [°C] in case of success; otherwise False.
-    def raw_to_degree(self, raw):
-        # Calculate the thermistor's resistance
-        R_thermistor = JT103_R_BALANCE / ((JT103_MAX_ADC_CORRECT / float(raw)) - 1.0)
-        # Use the beta equation to get the temperature
-        T_thermistor = ((JT103_BETA * JT103_TEMP_ROOM) / (JT103_BETA + (JT103_TEMP_ROOM * log(R_thermistor/JT103_R_ROOM)))) - JT103_TEMP_K2C
-        # Return the temperature (in degree Celsius)
-        return float(T_thermistor)
-
-
-    ###
     # Read the resulting temperature value (degree Celsius).
     #
     # @param[in]    self            The object pointer.
@@ -104,6 +104,6 @@ class JT103(object):
         # Check if the ADC returned a valid conversion result
         if data is not False:
             # Return the temperature (in degree Celsius)
-            return self.raw_to_degree(data)
+            return raw_to_degree(data)
         else:
             return False

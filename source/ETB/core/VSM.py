@@ -74,12 +74,31 @@ class VSM(object):
 
 
     ###
+    # Check if a given channel (MIC) is enabled.
+    #
+    # @param[in]    self            The object pointer.
+    # @param[in]    channel         Channel to be selected (1-4)
+    # @return       True if enabled; False otherwise
+    def ch_is_enabled(self, channel):
+        # Check the given channel
+        assert 1 <= channel <= 4, 'Channel can only be between 1 and 4'
+        # Select the channel
+        self._mux.select(channel)
+        # Check if MIC is enabled
+        ret = self._mic[channel].is_enabled()
+        # Deselect the channel
+        self._mux.select(0)
+        # Return the result
+        return ret
+
+
+    ###
     # En/Disable a given channel (MIC).
     #
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    enabled         Enable (1) or disable (0)
-    # @return       True is enabled; False otherwise
+    # @return       True if enabled; False otherwise
     def _set_enable(self, channel, enabled):
         # Check the given channel
         assert 1 <= channel <= 4, 'Channel can only be between 1 and 4'
@@ -90,14 +109,8 @@ class VSM(object):
         else:
             # Disable the MIC (GPIO)
             self._mic[channel].disable()
-        # Select the channel
-        self._mux.select(channel)
-        # Check if MIC is really enabled
-        ret = self._mic[channel].is_enabled()
-        # Deselect the channel
-        self._mux.select(0)
-        # Return the result
-        return ret
+        # Check if the channel is enabled now
+        return self.ch_is_enabled(channel)
 
 
     ###

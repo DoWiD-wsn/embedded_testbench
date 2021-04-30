@@ -20,20 +20,12 @@
 import time
 
 ### ETB ###
-# CORE #
+# Core functionality
 from ETB.core.INA219 import *
 from ETB.core.VSM import *
 from ETB.core.ADS1115 import *
-# SENS #
-from ETB.sens.BME280 import *
-from ETB.sens.DS18B20 import *
-from ETB.sens.LM75 import *
-from ETB.sens.JT103 import *
-# COMM #
-# UTIL #
-from ETB.util.I2C_helper import *
-from ETB.util.MCU_AVR import *
-from ETB.util.FCNT import *
+# Miscy
+from ETB.sens.JT103 import raw_to_degree
 
 
 #####
@@ -62,6 +54,16 @@ class ETB(object):
         for i in range(1,3):
             # Check if MIC is really enabled
             self._inaaux[i].calibrate()
+
+
+    ###
+    # Check if a given output channel is enabled.
+    #
+    # @param[in]    self            The object pointer.
+    # @param[in]    channel         Channel to be selected (1-4)
+    # @return       True if enabled; False otherwise
+    def ch_is_enabled(self, channel):
+        return self._vsm.ch_is_enabled(channel)
 
 
     ###
@@ -309,7 +311,7 @@ class ETB(object):
         # Check if the ADC returned a valid conversion result
         if data is not False:
             # Return the temperature (in degree Celsius)
-            return self._adc.raw_to_degree(data)
+            return raw_to_degree(data)
         else:
             return False
 

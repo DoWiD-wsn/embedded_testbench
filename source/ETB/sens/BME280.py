@@ -550,7 +550,7 @@ class BME280(object):
     # @param[in]    self            The object pointer.
     # @param[in]    timeout         Timeout for waiting [ms].
     # @return       Raw pressure value in case of success; otherwise False.
-    def _get_raw_pressure(self):
+    def _get_raw_pressure(self, timeout=500):
         # Check if the sensor readings are ready
         if self.wait_for_ready(timeout) is False:
             return False
@@ -571,7 +571,7 @@ class BME280(object):
     # @param[in]    self            The object pointer.
     # @param[in]    timeout         Timeout for waiting [ms].
     # @return       Raw humidity value in case of success; otherwise False.
-    def _get_raw_humidity(self):
+    def _get_raw_humidity(self, timeout=500):
         # Check if the sensor readings are ready
         if self.wait_for_ready(timeout) is False:
             return False

@@ -195,7 +195,7 @@ class LM75(object):
         # Read the temperature register value as signed integer (big endian)
         raw = self._i2c_read_S16BE(register)
         # Convert word to float
-        return (raw / 32.0) / 8.0
+        return (float(raw>>4)/16.0)
 
 
     ###
