@@ -1,19 +1,36 @@
-##### LIBRARIES ########################
+#####
+# @brief   Embedded Testbench (ETB) module
+#
+# Module containing the embedded testbench (ETB) class.
+#
+# @file     /etb/ETB.py
+# @author   $Author: Dominik Widhalm $
+# @version  $Revision: 1.0 $
+# @date     $Date: 2021/04/30 $
+#
+# @note     Don't forget to enable I2C, e.g. with sudo raspi-config
+#
+# @example  For examples refer to the scripts in the examples directory
+#####
+
+
+##### LIBRARIES #####
 ### GLOBAL ###
 # time (for sleep method)
 import time
-### CORE ###
+
+### ETB ###
+# CORE #
 from ETB.core.INA219 import *
 from ETB.core.VSM import *
 from ETB.core.ADS1115 import *
-### SENS ###
+# SENS #
 from ETB.sens.BME280 import *
 from ETB.sens.DS18B20 import *
 from ETB.sens.LM75 import *
 from ETB.sens.JT103 import *
-### COMM ###
-# tbd
-### UTIL ###
+# COMM #
+# UTIL #
 from ETB.util.I2C_helper import *
 from ETB.util.MCU_AVR import *
 from ETB.util.FCNT import *
