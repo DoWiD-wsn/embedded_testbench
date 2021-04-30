@@ -100,7 +100,7 @@ current = []
 power = []
 
 # Write starting-message
-print("===== ENERGY MEASUREMENT START =====")
+print("===== POWER MEASUREMENT START =====")
 
 ##########
 # Run loop (break by condition)
@@ -218,7 +218,7 @@ if OUTPUT_CSV==1:
         exit(-1)
 
 # Measurements finished
-print("===== ENERGY MEASUREMENT END   =====")
+print("===== POWER MEASUREMENT END   =====")
 ########################################################################
 
 # End of experiment
