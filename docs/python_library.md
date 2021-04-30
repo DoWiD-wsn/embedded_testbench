@@ -114,7 +114,7 @@ For this purpose the following libraries are needed:
 * Zigbee:  
     `python3 -m pip install digi-xbee`
 * Matplotlib:  
-    `sudo apt install python3-tk`  
+    `sudo apt install python3-tk libatlas-base-dev libopenjp2-7-dev`  
     `python3 -m pip install matplotlib numpy scipy`
 
 ---
