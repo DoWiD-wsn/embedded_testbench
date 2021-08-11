@@ -30,6 +30,8 @@ from ETB.ETB import *
 import time
 # datetime
 from datetime import datetime
+# directory/file functionality
+import os
 # CSV functionality
 import csv
 

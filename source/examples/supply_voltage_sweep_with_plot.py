@@ -31,6 +31,8 @@ from ETB.ETB import *
 import time
 # datetime
 from datetime import datetime
+# directory/file functionality
+import os
 # Math functionality (ceil() for plotting)
 from math import ceil
 # CSV functionality
