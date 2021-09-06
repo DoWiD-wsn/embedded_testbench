@@ -104,17 +104,17 @@ Dependency graph:
 The test node runs python scripts and uses the raspberry's GPIOs, the one-wire interface, and the two-wire interface (I2C).
 For this purpose the following libraries are needed:
 
-* Python 3:
-    `sudo apt install python3-pip python3-dev`
-* I2C:
+* Python 3:  
+    `sudo apt install python3-pip python3-dev`  
+* I2C:  
     `sudo apt install i2c-tools python3-smbus`
-* MySQL:
-    `sudo apt install default-libmysqlclient-dev`
+* MySQL:  
+    `sudo apt install default-libmysqlclient-dev`  
     `python3 -m pip install mysql-connector-python`
-* Zigbee:
+* Zigbee:  
     `python3 -m pip install digi-xbee`
-* Matplotlib:
-    `sudo apt install python3-tk libatlas-base-dev libopenjp2-7-dev`
+* Matplotlib:  
+    `sudo apt install python3-tk libatlas-base-dev libopenjp2-7-dev`  
     `python3 -m pip install matplotlib numpy scipy`
 
 ---
