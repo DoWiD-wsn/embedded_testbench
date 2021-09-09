@@ -1,6 +1,6 @@
 # Embedded Testbench (ETB)
 
-The **E**mbedded **T**est**b**ench (**ETB**) is a platform consisting of a Raspberry Pi add-on and a Python library designed to enable to testing, analyzing, and profiling of embedded systems.
+The **E**mbedded **T**est**b**ench (**ETB**) is a platform consisting of a Raspberry Pi add-on and a Python library designed to enable the testing, analyzing, and profiling of embedded systems.
 A focus is laid on low-power embedded systems such as wireless sensor nodes.
 Additionally, the ETB supports test automation with the possibility of remote control via TCP/IP.
 
