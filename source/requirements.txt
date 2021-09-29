@@ -1,3 +1,6 @@
+# smbus/i2c
+smbus
+
 # MySQL
 mysql-connector-python
 
@@ -8,7 +11,3 @@ scipy
 
 # Xbee
 digi-xbee
-
-# ADS1115 ADC
-adafruit-circuitpython-seesaw
-adafruit-ads1x15
