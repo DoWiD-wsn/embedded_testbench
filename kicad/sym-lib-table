@@ -1,3 +1,3 @@
 (sym_lib_table
-  (lib (name mycomponents)(type Legacy)(uri /home/widhalm/git-work/dc-res/src/kicad_pcb/embedded_testbench/mycomponents.lib)(options "")(descr ""))
+  (lib (name mycomponents)(type Legacy)(uri /home/widhalm/git-work/dc-res/public/Github-Embedded_Testbench/kicad/mycomponents.lib)(options "")(descr ""))
 )
