@@ -202,6 +202,8 @@ class SHTC3(object):
     def sleep_disable(self):
         # Write soft-reset command
         self.__bus.write_byte_data(self.__i2c_address,(SHTC3_COM_WAKEUP>>8),(SHTC3_COM_WAKEUP&0xFF))
+        # Let the sensor wake up
+        time.sleep(SHTC3_WAKEUP_DELAY/1000)
         # Return True
         return True
 
