@@ -18,14 +18,28 @@
 ### GLOBAL ###
 # time (for sleep method)
 import time
+# GPIO functionality (imported as GPIO)
+import RPi.GPIO as GPIO
+# for GPIO numbering, choose BCM mode
+GPIO.setmode(GPIO.BCM)
+# Disable GPIO in-use warnings
+GPIO.setwarnings(False)
 
 ### ETB ###
 # Core functionality
 from ETB.core.INA219 import *
 from ETB.core.VSM import *
 from ETB.core.ADS1115 import *
-# Miscy
+# Misc
 from ETB.sens.JT103 import raw_to_degree
+
+
+##### GLOBAL VARIABLES #####
+# Test control signals
+T_RST_GPIO = 23
+T_EN_GPIO  = 22
+T_RUN_GPIO = 27
+T_RES_GPIO = 17
 
 
 #####
@@ -33,11 +47,13 @@ from ETB.sens.JT103 import raw_to_degree
 # @brief    ETB embedded testbench
 #
 # Class for the VSM voltage scaling module used on the ETB.
+#####
 class ETB(object):
     ###
     # The constructor.
     #
     # @param[in]    self            The object pointer.
+    ###
     def __init__(self):
         # @var _vsm
         # voltage scaling module (with default enable lines)
@@ -54,6 +70,24 @@ class ETB(object):
         for i in range(1,3):
             # Check if MIC is really enabled
             self._inaaux[i].calibrate()
+        # @var __t_rst
+        # Object's GPIO pin (BCM) for T_RST (active low)
+        self.__trst = T_RST_GPIO
+        GPIO.setup(self.__trst, GPIO.OUT)
+        GPIO.output(self.__trst, GPIO.HIGH)
+        # @var __t_en
+        # Object's GPIO pin (BCM) for T_EN
+        self.__ten = T_EN_GPIO
+        GPIO.setup(self.__ten, GPIO.OUT)
+        GPIO.output(self.__ten, GPIO.LOW)
+        # @var __t_run
+        # Object's GPIO pin (BCM) for T_RUN
+        self.__trun = T_RUN_GPIO
+        GPIO.setup(self.__trun, GPIO.IN)
+        # @var __t_res
+        # Object's GPIO pin (BCM) for T_RES
+        self.__tres = T_RES_GPIO
+        GPIO.setup(self.__tres, GPIO.IN)
 
 
     ###
@@ -62,6 +96,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       True if enabled; False otherwise
+    ###
     def ch_is_enabled(self, channel):
         return self._vsm.ch_is_enabled(channel)
 
@@ -72,6 +107,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       True is enabled; False otherwise
+    ###
     def ch_enable(self, channel):
         return self._vsm.ch_enable(channel)
 
@@ -82,6 +118,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       True is enabled; False otherwise
+    ###
     def ch_disable(self, channel):
         return self._vsm.ch_disable(channel)
 
@@ -90,6 +127,7 @@ class ETB(object):
     #
     # @param[in]    self            The object pointer.
     # @return       True is enabled; False otherwise
+    ###
     def ch_enable_all(self):
         return self._vsm.ch_enable_all()
 
@@ -99,6 +137,7 @@ class ETB(object):
     #
     # @param[in]    self            The object pointer.
     # @return       True is enabled; False otherwise
+    ###
     def ch_disable_all(self):
         return self._vsm.ch_disable_all()
 
@@ -110,6 +149,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    ilim            Current limit for the MIC (default: 2A)
     # @return       True in case of success; False otherwise
+    ###
     def ch_limit_A(self, channel, ilim=2):
         return self._vsm.ch_limit_A(channel, ilim)
 
@@ -120,6 +160,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    ilim            Current limit for the MIC (default: 2A)
     # @return       True in case of success; False otherwise
+    ###
     def ch_limit_A_all(self, ilim=2):
         return self._vsm.ch_limit_A_all(ilim)
 
@@ -131,6 +172,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    imax            Maximum current for the INA (default: 400mA)
     # @return       True in case of success; False otherwise
+    ###
     def ch_calibrate_A(self, channel, imax=INA219_CAL_400MA):
         return self._vsm.ch_calibrate_A(channel, imax)
 
@@ -141,6 +183,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    imax            Maximum current for the INA (default: 400mA)
     # @return       True in case of success; False otherwise
+    ###
     def ch_calibrate_A_all(self, imax=INA219_CAL_400MA):
         return self._vsm.ch_calibrate_A_all(imax)
 
@@ -152,6 +195,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    value           Decimal value of the vout register
     # @return       True in case of success; False otherwise
+    ###
     def ch_set_V_decimal(self, channel, value):
         return self._vsm.ch_set_V_decimal(channel, value)
 
@@ -162,6 +206,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    value           Decimal value of the vout register
     # @return       True in case of success; False otherwise
+    ###
     def ch_set_V_decimal_all(self, value):
         return self._vsm.ch_set_V_decimal_all(value)
 
@@ -173,6 +218,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    volt            Output voltage in volts (V)
     # @return       True in case of success; False otherwise
+    ###
     def ch_set_V(self, channel, volt):
         return self._vsm.ch_set_V(channel, volt)
 
@@ -183,6 +229,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    volt            Output voltage in volts (V)
     # @return       True in case of success; False otherwise
+    ###
     def ch_set_V_all(self, volt):
         return self._vsm.ch_set_V_all(volt)
 
@@ -193,6 +240,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       True in case of success; False otherwise
+    ###
     def ch_is_power_good(self, channel):
         return self._vsm.ch_is_power_good(channel)
 
@@ -202,6 +250,7 @@ class ETB(object):
     #
     # @param[in]    self            The object pointer.
     # @return       True in case of success; False otherwise
+    ###
     def ch_is_power_good_all(self):
         return self._vsm.ch_is_power_good_all()
 
@@ -213,6 +262,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    timeout         Timeout in milliseconds (ms; default: 1s)
     # @return       True in case of success; False otherwise
+    ###
     def ch_wait_power_good(self,channel,timeout=1000):
         return self._vsm.ch_wait_power_good(channel,timeout)
 
@@ -223,6 +273,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    timeout         Timeout in milliseconds (ms; default: 1s)
     # @return       True in case of success; False otherwise
+    ###
     def ch_wait_power_good_all(self,timeout=1000):
         return self._vsm.ch_wait_power_good_all(timeout)
 
@@ -233,6 +284,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       Voltage in volts (V) in case of success; otherwise False.
+    ###
     def ch_get_V(self, channel):
         return self._vsm.ch_get_V(channel)
 
@@ -242,6 +294,7 @@ class ETB(object):
     #
     # @param[in]    self        The object pointer.
     # @return       List of voltages in volts (V) in case of success; otherwise False.
+    ###
     def ch_get_V_all(self):
         return self._vsm.ch_get_V_all()
 
@@ -252,6 +305,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-4)
     # @return       Current in milliamps (mA) in case of success; otherwise False.
+    ###
     def ch_get_mA(self, channel):
         return self._vsm.ch_get_mA(channel)
 
@@ -261,6 +315,7 @@ class ETB(object):
     #
     # @param[in]    self            The object pointer.
     # @return       List of currents in milliamps (mA) in case of success; otherwise False.
+    ###
     def ch_get_mA_all(self):
         return self._vsm.ch_get_mA_all()
 
@@ -271,6 +326,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    volt            Voltage in volts (V)
     # @preturn      Decimal value in case of success; otherwise False.
+    ###
     def volt2dec(self, volt):
         return self._vsm.volt2dec(volt)
 
@@ -281,6 +337,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    decimal         Decimal value for the MIC's vout
     # @return       Voltage in volts (V) in case of success; otherwise False.
+    ###
     def dec2volt(self, decimal):
         return self._vsm.dec2volt(decimal)
 
@@ -293,6 +350,7 @@ class ETB(object):
     # @param[in]    gain            Gain to be used
     # @param[in]    data_rate       Data rate to be used
     # @return       Signed conversion value in case of success; otherwise False.
+    ###
     def read_channel(self, channel, gain=1, data_rate=ADS1115_DR_DEFAULT):
         return self._adc.read_channel(channel, gain, data_rate)
 
@@ -303,6 +361,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    thermistor      Thermistor input (ADC channel; 0-1)
     # @param[out]   Temperature value [°C] in case of success; otherwise False.
+    ###
     def read_thermistor(self, thermistor):
         # Check the given thermistor channel
         assert 0 <= thermistor <= 1, 'Thermistor channel can only be between 0 and 1'
@@ -323,6 +382,7 @@ class ETB(object):
     # @param[in]    channel         Channel to be selected (1-4)
     # @param[in]    imax            Maximum current for the INA (default: 400mA)
     # @return       True in case of success; False otherwise
+    ###
     def ch_calibrate_A(self, channel, imax=INA219_CAL_400MA):
         # Check the given thermistor channel
         assert 1 <= channel <= 2, 'Auxiliary channel can only be 1 or 2'
@@ -336,6 +396,7 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-2)
     # @return       Voltage in volts (V) in case of success; otherwise False.
+    ###
     def aux_get_V(self, channel):
         # Check the given thermistor channel
         assert 1 <= channel <= 2, 'Auxiliary channel can only be 1 or 2'
@@ -349,7 +410,70 @@ class ETB(object):
     # @param[in]    self            The object pointer.
     # @param[in]    channel         Channel to be selected (1-2)
     # @return       Current in milliamps (mA) in case of success; otherwise False.
+    ###
     def aux_get_mA(self, channel):
         assert 1 <= channel <= 2, 'Auxiliary channel can only be 1 or 2'
         # Get the current
         return self._inaaux[channel].get_current_mA()
+
+
+    ###
+    # Set T_RST signal to LOW.
+    #
+    # @param[in]    self            The object pointer.
+    ###
+    def trst_set_low(self):
+        # Set respective GPIO pin to LOW
+        GPIO.output(self.__trst, GPIO.LOW)
+
+
+    ###
+    # Set T_RST signal to LOW.
+    #
+    # @param[in]    self            The object pointer.
+    ###
+    def trst_set_high(self):
+        # Set respective GPIO pin to HIGH
+        GPIO.output(self.__trst, GPIO.HIGH)
+
+
+    ###
+    # Set T_EN signal to LOW.
+    #
+    # @param[in]    self            The object pointer.
+    ###
+    def ten_set_low(self):
+        # Set respective GPIO pin to LOW
+        GPIO.output(self.__ten, GPIO.LOW)
+
+
+    ###
+    # Set T_EN signal to LOW.
+    #
+    # @param[in]    self            The object pointer.
+    ###
+    def ten_set_high(self):
+        # Set respective GPIO pin to HIGH
+        GPIO.output(self.__ten, GPIO.HIGH)
+
+
+    ###
+    # Read a T_RUN signal.
+    #
+    # @param[in]    self            The object pointer.
+    # @return       Status of the T_RUN GPIO pin.
+    ###
+    def trun_read(self):
+        # Read GPIO pin
+        return 1 if GPIO.input(self.__trun) == GPIO.HIGH else 0
+
+
+    ###
+    # Read a T_RES signal.
+    #
+    # @param[in]    self            The object pointer.
+    # @return       Status of the T_RES GPIO pin.
+    ###
+    def tres_read(self):
+        # Read GPIO pin
+        return 1 if GPIO.input(self.__tres) == GPIO.HIGH else 0
