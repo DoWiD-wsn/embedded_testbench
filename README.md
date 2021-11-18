@@ -64,6 +64,12 @@ However, for major changes or general discussions please contact [Dominik Widhal
 - Dominik Widhalm, Karl M. Goeschka, and Wolfgang Kastner, "*Node-level indicators of soft faults in wireless sensor networks*", in The 40th International Symposium on Reliable Distributed Systems (SRDS 2021), September 20-23, 2021, DOI: [10.1109/SRDS53918.2021.00011](https://doi.org/10.1109/SRDS53918.2021.00011)
 
 
+## Changelog
+
+A list of prior versions and changes between the updates can be found inn the [CHANGELOG.md](CHANGELOG.md) file.
+Note that the major and minor number refer to the hardware version of the ETB board while the patch version is used to denote subsequent software versions.
+
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
