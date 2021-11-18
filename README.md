@@ -56,6 +56,14 @@ For coding bugs or minor improvements simply use pull requests.
 However, for major changes or general discussions please contact [Dominik Widhalm](mailto:widhalm@technikum-wien.at?subject=Embedded%20Testbench%20(ETB)%20on%20GitHub).
 
 
+## Publications
+
+- Dominik Widhalm, Karl M. Goeschka, and Wolfgang Kastner, "*An open-source wireless sensor node platform with active node-level reliability for monitoring applications*", Sensors 21, no. 22: 7613, 2021, DOI: [10.3390/s21227613](https://doi.org/10.3390/s21227613)
+- Dominik Widhalm, Karl M. Goeschka, and Wolfgang Kastner, "*Undervolting on wireless sensor nodes: a critical perspective*", in The 23rd International Conference on Distributed Computing and Networking (ICDCN 2022), January 4-7, 2022, DOI: [10.1145/3491003.3491018O](https://doi.org/10.1145/3491003.3491018O)
+- Dominik Widhalm, Karl M. Goeschka, and Wolfgang Kastner, "*Is Arduino a suitable platform for sensor nodes?*", in The 47th Annual Conference of the IEEE Industrial Electronics Society (IECON 2021), October 13-16, 2021, DOI: tba
+- Dominik Widhalm, Karl M. Goeschka, and Wolfgang Kastner, "*Node-level indicators of soft faults in wireless sensor networks*", in The 40th International Symposium on Reliable Distributed Systems (SRDS 2021), September 20-23, 2021, DOI: [10.1109/SRDS53918.2021.00011](https://doi.org/10.1109/SRDS53918.2021.00011)
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
