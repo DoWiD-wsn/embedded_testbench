@@ -4,7 +4,7 @@ The **E**mbedded **T**est**b**ench (**ETB**) is a platform consisting of a Raspb
 A focus is laid on low-power embedded systems such as wireless sensor nodes.
 Additionally, the ETB supports test automation with the possibility of remote control via TCP/IP.
 
-![PCB 3D (/media/pcb/embedded_testbench-3d)](/media/pcb/embedded_testbench-3d)
+![PCB 3D (/media/pcb/embedded_testbench-3d.png)](/media/pcb/embedded_testbench-3d.png)
 
 
 ## Key Facts
