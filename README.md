@@ -4,6 +4,9 @@ The **E**mbedded **T**est**b**ench (**ETB**) is a platform consisting of a Raspb
 A focus is laid on low-power embedded systems such as wireless sensor nodes.
 Additionally, the ETB supports test automation with the possibility of remote control via TCP/IP.
 
+![PCB 3D (/media/pcb/embedded_testbench-3d)](/media/pcb/embedded_testbench-3d)
+
+
 ## Key Facts
 
 * 40-pin expansion header for Raspberry Pi [2|3|4] model B+
